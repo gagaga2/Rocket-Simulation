@@ -33,16 +33,6 @@ namespace Rocket
             rocket = tex;
         }
 
-        public void CalcGravity(Planet[] bodies)
-        {
-            foreach (Planet b in bodies)
-            {
-                //calculate gravity based on distance for all celestial bodies
-            }
-        }
-
-
-
         public void Update()
         {
             KeyboardState state = Keyboard.GetState();
