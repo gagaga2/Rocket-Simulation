@@ -15,7 +15,7 @@ namespace Rocket
     {
         private Texture2D rocket;
 
-        Vector2 movement = new Vector2(0, 0);
+        Vector2 acceleration = new Vector2(0, 0);
         Vector2 coords = new Vector2(300, 300);
         float scale = 1f;
 
@@ -38,39 +38,39 @@ namespace Rocket
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Left))
             {
-                movement.X -= 2;
+                acceleration.X -= 2;
             }
 
             if (state.IsKeyDown(Keys.Right))
             {
-                movement.X += 2;
+                acceleration.X += 2;
             }
             if (state.IsKeyDown(Keys.Down))
             {
-                movement.Y += 2;
+                acceleration.Y += 2;
             }
             if (state.IsKeyDown(Keys.Up))
             {
-                movement.Y -= 2;
+                acceleration.Y -= 2;
             }
 
             //Slowwly soften acceleration
-            if (movement.X < 0)
-                movement.X += 1;
+            if (acceleration.X < 0)
+                acceleration.X += 1;
 
-            if (movement.X > 0)
-                movement.X -= 1;
+            if (acceleration.X > 0)
+                acceleration.X -= 1;
 
-            if (movement.Y < 0)
-                movement.Y += 1;
+            if (acceleration.Y < 0)
+                acceleration.Y += 1;
 
-            if (movement.Y > 0)
-                movement.Y -= 1;
+            if (acceleration.Y > 0)
+                acceleration.Y -= 1;
 
-            //add movement
-            coords += movement;
+            //add acceleration
+            coords += acceleration;
 
-            if (movement.Y > 3)
+            if (acceleration.Y > 3)
                 scale = 0.5f;
             else
                 scale = 1f;

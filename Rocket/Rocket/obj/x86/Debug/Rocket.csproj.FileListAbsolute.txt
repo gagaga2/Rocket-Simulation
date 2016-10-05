@@ -24,3 +24,5 @@ C:\Users\max.gabrielsson\Dropbox\C#\Skolprojekt\2\Rocket\Rocket\obj\x86\Debug\Ro
 C:\Users\max.gabrielsson\Dropbox\C#\Skolprojekt\2\Rocket\Rocket\obj\x86\Debug\Rocket.exe
 C:\Users\max.gabrielsson\Dropbox\C#\Skolprojekt\2\Rocket\Rocket\obj\x86\Debug\Rocket.pdb
 C:\Users\max.gabrielsson\Dropbox\C#\Skolprojekt\2\Rocket\Rocket\bin\Windows\x86\Debug\Content\rocket.xnb
+C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\obj\x86\Debug\Rocket.exe
+C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\obj\x86\Debug\Rocket.pdb
