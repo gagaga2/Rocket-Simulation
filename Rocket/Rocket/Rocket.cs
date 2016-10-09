@@ -15,65 +15,64 @@ namespace Rocket
     {
         private Texture2D rocket;
 
-        Vector2 acceleration = new Vector2(0, 0);
-        Vector2 coords = new Vector2(300, 300);
-        float scale = 1f;
+        Vector2 forces = new Vector2(0, 0);             //this vector holds all forces that should be applied
+        Vector2 coords = new Vector2(300, 300);         //this holds the rockets position
+        float scale = 1f;                               //The "scale" of the drawn rocket (used for eventual zooming?)
 
-        int rocketArea;         //Used for Air Resistance calculations
-        float mass;             //Total mass of rocket
-        float fuelcapacity;     //85% of rocket mass
-        float fuel;             //Remaining fuel
-        float engineEfficiency; // Kn thrust/liter fuel
+        int rocketArea;                                 //Used for Air Resistance calculations
+        float mass;                                     //Total mass of rocket
+        float fuelcapacity;                             //should be 85% of rocket mass
+        float fuel;                                     //Remaining fuel
+        float engineEfficiency;                         // Kn thrust/liter fuel
 
-        int rotation;           //Rotation of rockets nose relative to earth (or closest body??)
-        float altitude;         //Distance from earths sealevel
+        int rotation;                                   //Rotation of rockets nose relative to earth (or closest body??)
+        float altitude;                                 //Distance from earths sealevel
+
+
+
 
         public void Load(Texture2D tex)
         {
             rocket = tex;
         }
 
+
         public void Update()
         {
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Left))
             {
-                acceleration.X -= 2;
+                forces.X -= 2;
             }
 
             if (state.IsKeyDown(Keys.Right))
             {
-                acceleration.X += 2;
+                forces.X += 2;
             }
             if (state.IsKeyDown(Keys.Down))
             {
-                acceleration.Y += 2;
+                forces.Y += 2;
             }
             if (state.IsKeyDown(Keys.Up))
             {
-                acceleration.Y -= 2;
+                forces.Y -= 2;
             }
 
             //Slowwly soften acceleration
-            if (acceleration.X < 0)
-                acceleration.X += 1;
+            if (forces.X < 0)
+                forces.X += 1;
 
-            if (acceleration.X > 0)
-                acceleration.X -= 1;
+            if (forces.X > 0)
+                forces.X -= 1;
 
-            if (acceleration.Y < 0)
-                acceleration.Y += 1;
+            if (forces.Y < 0)
+                forces.Y += 1;
 
-            if (acceleration.Y > 0)
-                acceleration.Y -= 1;
+            if (forces.Y > 0)
+                forces.Y -= 1;
 
-            //add acceleration
-            coords += acceleration;
-
-            if (acceleration.Y > 3)
-                scale = 0.5f;
-            else
-                scale = 1f;
+            //Apply all forces every step to change position
+            coords += forces;
         }
 
         public void Draw(SpriteBatch spritebatch)
