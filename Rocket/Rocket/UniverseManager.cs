@@ -9,30 +9,29 @@ namespace Rocket
     class UniverseManager
     {
 
-        Planet[] bodies;
+        Rocket rocket;
+        Earth earth;
+        Moon moon;
 
-        public UniverseManager() { }
+        int distanceFromEarth;
+        int distanceFromMoon;
 
-        public void CreateUniverse()
+        public UniverseManager(Rocket r, Earth e, Moon m)
         {
-            bodies[0] = new Planet("Earth", 2000, 100);
-            bodies[1] = new Planet("Moon", 500, 50);
+            this.rocket = r;
+            this.earth = e;
+            this.moon = m;
         }
 
-        public void ApplyGravitationalPull(Rocket r)
+        public void Update()
         {
-            foreach (Planet p in bodies)
-            {
-                //distanceFrom(r) * p.mass
-            }
+            //update rockets distance
         }
+
 
         public void Draw()
         {
-            foreach(Planet p in bodies)
-            {
-                //rita
-            }
+
         }
     }
 }
