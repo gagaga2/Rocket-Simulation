@@ -13,14 +13,17 @@ namespace Rocket
         Earth earth;
         Moon moon;
 
-        int distanceFromEarth;
-        int distanceFromMoon;
 
         public UniverseManager(Rocket r, Earth e, Moon m)
         {
             this.rocket = r;
             this.earth = e;
             this.moon = m;
+        }
+
+        public void ApplyAirResistance(Rocket r, Earth e)
+        {
+            r.forces.Y += (r.rocketArea * e.GetAirDensity(r));
         }
 
         public void Update()

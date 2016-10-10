@@ -15,11 +15,11 @@ namespace Rocket
     {
         private Texture2D rocket;
 
-        Vector2 forces = new Vector2(0, 0);             //this vector holds all forces that should be applied
-        Vector2 coords = new Vector2(300, 300);         //this holds the rockets position
-        float scale = 1f;                               //The "scale" of the drawn rocket (used for eventual zooming?)
+        public Vector2 forces = new Vector2(0, 0);                //this vector holds all forces that should be applied
+        public Vector2 coords { get; } = new Vector2(300, 300);                 //this holds the rockets position
+        float scale = 1f;                                                       //The "scale" of the drawn rocket (used for eventual zooming?)
 
-        int rocketArea;                                 //Used for Air Resistance calculations
+        public int rocketArea { get; }                  //Used for Air Resistance calculations
         float mass;                                     //Total mass of rocket
         float fuelcapacity;                             //should be 85% of rocket mass
         float fuel;                                     //Remaining fuel
@@ -27,7 +27,6 @@ namespace Rocket
 
         int rotation;                                   //Rotation of rockets nose relative to earth (or closest body??)
         float altitude;                                 //Distance from earths sealevel
-
 
 
 

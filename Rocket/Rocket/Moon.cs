@@ -15,14 +15,16 @@ namespace Rocket
         Vector2 position { get; set; }                   //position (?,???)
         float scale { get; set; }                        //for zoomign purposes
 
-
-
         public Moon()
         {
             this.mass = 7.342E+22;
             this.radian = 1737;
         }
 
+        public int GetDistance(Rocket r)
+        {
+
+        }
 
         public void Draw(SpriteBatch spritebatch)
         {
