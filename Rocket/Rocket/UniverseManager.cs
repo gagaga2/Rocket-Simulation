@@ -21,20 +21,41 @@ namespace Rocket
             this.moon = m;
         }
 
-        public void ApplyAirResistance(Rocket r, Earth e)
+        public double GetDistanceFromEarth()
         {
-            r.forces.Y += (r.rocketArea * e.GetAirDensity(r));
+            float dx = this.rocket.coords.X - this.earth.position.X;
+            float dy = this.rocket.coords.Y - this.earth.position.Y;
+
+            return (dx * dx) + (dy * dy);   //osäker, borde funka, vill undvika math.* funktionerna pga performance
         }
+
+        public double GetEarthAirDensity()
+        {
+            //retunera luftdensiteten utifrån tabellvärden baserat på GetDistanceFromEarth var 10:nde kilometr.
+            int i = (int) Math.Round(GetDistanceFromEarth() / 10);
+            return this.earth.AirDensity[i];
+        }
+
+        public void ApplyAirResistance()
+        {
+            int a = this.rocket.rocketArea;
+            double p = GetEarthAirDensity();
+            float v = this.rocket.acceleration.Y;
+            float c = this.rocket.dragCoefficient;
+
+            float drag = (float) ((p * c * a * (v * v)) / 2);       //Drag Equation
+
+            this.rocket.forces.Y -= drag;            //FUNGERAR BARA DÅ RAKETEN ÅKER "UPP", I Y LED.
+        }                                            //orolig över all variabel casting/ olika typer. ska hålla koll på i framtiden då det kan brista här
 
         public void Update()
         {
             //update rockets distance
         }
 
-
         public void Draw()
         {
-
+            //rita värden av funktioner som text på skärmen
         }
     }
 }

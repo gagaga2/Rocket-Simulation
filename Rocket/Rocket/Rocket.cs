@@ -15,11 +15,13 @@ namespace Rocket
     {
         private Texture2D rocket;
 
-        public Vector2 forces = new Vector2(0, 0);                //this vector holds all forces that should be applied
+        public Vector2 acceleration = new Vector2(0, 0);                //this vector holds all forces that should be applied
+        public Vector2 forces = new Vector2(0, 0);
         public Vector2 coords { get; } = new Vector2(300, 300);                 //this holds the rockets position
         float scale = 1f;                                                       //The "scale" of the drawn rocket (used for eventual zooming?)
 
         public int rocketArea { get; }                  //Used for Air Resistance calculations
+        public float dragCoefficient;
         float mass;                                     //Total mass of rocket
         float fuelcapacity;                             //should be 85% of rocket mass
         float fuel;                                     //Remaining fuel
@@ -41,37 +43,37 @@ namespace Rocket
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Left))
             {
-                forces.X -= 2;
+                acceleration.X -= 2;
             }
 
             if (state.IsKeyDown(Keys.Right))
             {
-                forces.X += 2;
+                acceleration.X += 2;
             }
             if (state.IsKeyDown(Keys.Down))
             {
-                forces.Y += 2;
+                acceleration.Y += 2;
             }
             if (state.IsKeyDown(Keys.Up))
             {
-                forces.Y -= 2;
+                acceleration.Y -= 2;
             }
 
             //Slowwly soften acceleration
-            if (forces.X < 0)
-                forces.X += 1;
+            if (acceleration.X < 0)
+                acceleration.X += 1;
 
-            if (forces.X > 0)
-                forces.X -= 1;
+            if (acceleration.X > 0)
+                acceleration.X -= 1;
 
-            if (forces.Y < 0)
-                forces.Y += 1;
+            if (acceleration.Y < 0)
+                acceleration.Y += 1;
 
-            if (forces.Y > 0)
-                forces.Y -= 1;
+            if (acceleration.Y > 0)
+                acceleration.Y -= 1;
 
             //Apply all forces every step to change position
-            coords += forces;
+            coords += acceleration;
         }
 
         public void Draw(SpriteBatch spritebatch)
