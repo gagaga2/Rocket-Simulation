@@ -17,8 +17,8 @@ namespace Rocket
 
         public Vector2 acceleration = new Vector2(0, 0);                //this vector holds all forces that should be applied
         public Vector2 forces = new Vector2(0, 0);
-        public Vector2 coords { get; } = new Vector2(300, 300);                 //this holds the rockets position
-        float scale = 1f;                                                       //The "scale" of the drawn rocket (used for eventual zooming?)
+        public Vector2 coords = new Vector2(300, 300);                  //this holds the rockets position
+        float scale = 1f;                               //The "scale" of the drawn rocket (used for eventual zooming?)
 
         public int rocketArea { get; }                  //Used for Air Resistance calculations
         public float dragCoefficient;
@@ -27,9 +27,22 @@ namespace Rocket
         float fuel;                                     //Remaining fuel
         float engineEfficiency;                         // Kn thrust/liter fuel
 
-        int rotation;                                   //Rotation of rockets nose relative to earth (or closest body??)
+        int rotation = 0;                               //Rotation of rockets nose relative to earth (or closest body??)
         float altitude;                                 //Distance from earths sealevel
 
+        float toRadians = (float) Math.PI / 180;
+
+        public Vector2 RotateDegrees(Vector2 v, int degrees)
+        {
+
+            double cos = Math.Cos(degrees * toRadians);
+            double sin = Math.Sin(degrees * toRadians);
+
+            float rX = (float) ((v.X * cos) - (v.Y * sin));
+            float rY = (float) ((v.X * sin) + (v.Y * cos));
+
+            return new Vector2(rX, rY);
+        }
 
 
         public void Load(Texture2D tex)
@@ -43,12 +56,12 @@ namespace Rocket
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Left))
             {
-                acceleration.X -= 2;
+                rotation -= 5;
             }
 
             if (state.IsKeyDown(Keys.Right))
             {
-                acceleration.X += 2;
+                rotation += 5;
             }
             if (state.IsKeyDown(Keys.Down))
             {
@@ -72,13 +85,15 @@ namespace Rocket
             if (acceleration.Y > 0)
                 acceleration.Y -= 1;
 
+
             //Apply all forces every step to change position
-            coords += acceleration;
+            //forces += acceleration;
+            coords += RotateDegrees(acceleration, rotation);
         }
 
         public void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(rocket, coords, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            spritebatch.Draw(rocket, coords, null, Color.White, (rotation * toRadians), Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
 
     }
