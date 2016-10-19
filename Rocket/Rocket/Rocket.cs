@@ -13,10 +13,10 @@ namespace Rocket
 
     class Rocket
     {
-        private Texture2D rocket;
+        private Texture2D texture;
 
         public Vector2 acceleration = new Vector2(0, 0);                //this vector holds all forces that should be applied
-        public Vector2 forces = new Vector2(0, 0);
+        public Vector2 forces = new Vector2(0, 0);                      //
         public Vector2 coords = new Vector2(300, 300);                  //this holds the rockets position
         float scale = 1f;                               //The "scale" of the drawn rocket (used for eventual zooming?)
 
@@ -27,11 +27,12 @@ namespace Rocket
         float fuel;                                     //Remaining fuel
         float engineEfficiency;                         // Kn thrust/liter fuel
 
-        int rotation = 0;                               //Rotation of rockets nose relative to earth (or closest body??)
+        int rotation = 0;                               //Rotation of rocket, in degrees
         float altitude;                                 //Distance from earths sealevel
 
-        float toRadians = (float) Math.PI / 180;
-
+        private const float toRadians = (float) Math.PI / 180;  //multiply with degrees to get radians
+        
+        
         public Vector2 RotateDegrees(Vector2 v, int degrees)
         {
 
@@ -47,7 +48,7 @@ namespace Rocket
 
         public void Load(Texture2D tex)
         {
-            rocket = tex;
+            texture = tex;
         }
 
 
@@ -93,7 +94,7 @@ namespace Rocket
 
         public void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(rocket, coords, null, Color.White, (rotation * toRadians), Vector2.Zero, scale, SpriteEffects.None, 0f);
+            spritebatch.Draw(texture, coords, null, Color.White, (rotation * toRadians), Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
 
     }
