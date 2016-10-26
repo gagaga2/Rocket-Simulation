@@ -52,3 +52,5 @@ C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x8
 C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.XInput.xml
 C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.RawInput.xml
 C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Earth.fbx
+C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Earth.xnb

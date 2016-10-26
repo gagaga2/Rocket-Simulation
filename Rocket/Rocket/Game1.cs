@@ -13,7 +13,7 @@ namespace Rocket
         SpriteBatch spriteBatch;
 
         Rocket player1 = new Rocket();
-       
+        Earth earth1 = new Earth();
 
         public Game1()
         {
@@ -44,7 +44,7 @@ namespace Rocket
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             player1.Load(Content.Load<Texture2D>("rocket"));
-           
+            earth1.Load(Content.Load<Model>("Earth"));
 
             // TODO: use this.Content to load your game content here
         }
@@ -87,6 +87,7 @@ namespace Rocket
             spriteBatch.Begin();
 
             player1.Draw(spriteBatch);
+            earth1.DrawModel();
 
             spriteBatch.End();
             base.Draw(gameTime);

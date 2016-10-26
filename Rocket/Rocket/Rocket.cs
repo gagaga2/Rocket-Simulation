@@ -32,7 +32,6 @@ namespace Rocket
 
         private const float toRadians = (float) Math.PI / 180;  //multiply with degrees to get radians
         
-        
         public Vector2 RotateDegrees(Vector2 v, int degrees)
         {
 
