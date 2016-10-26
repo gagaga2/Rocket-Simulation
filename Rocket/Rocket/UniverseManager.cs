@@ -9,30 +9,53 @@ namespace Rocket
     class UniverseManager
     {
 
-        Planet[] bodies;
+        Rocket rocket;
+        Earth earth;
+        Moon moon;
 
-        public UniverseManager() { }
 
-        public void CreateUniverse()
+        public UniverseManager(Rocket r, Earth e, Moon m)
         {
-            bodies[0] = new Planet("Earth", 2000, 100);
-            bodies[1] = new Planet("Moon", 500, 50);
+            this.rocket = r;
+            this.earth = e;
+            this.moon = m;
         }
 
-        public void ApplyGravitationalPull(Rocket r)
+        public double GetDistanceFromEarth()
         {
-            foreach (Planet p in bodies)
-            {
-                //distanceFrom(r) * p.mass
-            }
+            float dx = this.rocket.coords.X - this.earth.position.X;
+            float dy = this.rocket.coords.Y - this.earth.position.Y;
+
+            return (dx * dx) + (dy * dy);   //osäker, borde funka, vill undvika math.* funktionerna pga performance
+        }
+
+        public double GetEarthAirDensity()
+        {
+            //retunera luftdensiteten utifrån tabellvärden baserat på GetDistanceFromEarth var 10:nde kilometr.
+            int i = (int) Math.Round(GetDistanceFromEarth() / 10);
+            return this.earth.AirDensity[i];
+        }
+
+        public void ApplyAirResistance()
+        {
+            int a = this.rocket.rocketArea;
+            double p = GetEarthAirDensity();
+            float v = this.rocket.acceleration.Y;
+            float c = this.rocket.dragCoefficient;
+
+            float drag = (float) ((p * c * a * (v * v)) / 2);       //Drag Equation
+
+            this.rocket.forces.Y -= drag;            //FUNGERAR BARA DÅ RAKETEN ÅKER "UPP", I Y LED.
+        }                                            //orolig över all variabel casting/ olika typer. ska hålla koll på i framtiden då det kan brista här
+
+        public void Update()
+        {
+            //update rockets distance
         }
 
         public void Draw()
         {
-            foreach(Planet p in bodies)
-            {
-                //rita
-            }
+            //rita värden av funktioner som text på skärmen
         }
     }
 }
