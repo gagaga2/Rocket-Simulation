@@ -17,7 +17,7 @@ namespace Rocket
 
         public Vector2 acceleration = new Vector2(0, 0);                //this vector holds all forces that should be applied
         public Vector2 forces = new Vector2(0, 0);
-        public Vector2 coords { get; } = new Vector2(300, 300);                 //this holds the rockets position
+        public Vector2 coords { get; set; } = new Vector2(300, 300);                 //this holds the rockets position
         float scale = 1f;                                                       //The "scale" of the drawn rocket (used for eventual zooming?)
 
         public int rocketArea { get; }                  //Used for Air Resistance calculations
