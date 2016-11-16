@@ -23,7 +23,7 @@ namespace Rocket
 
         public int GetDistance(Rocket r)
         {
-
+            return 10;
         }
 
         public void Draw(SpriteBatch spritebatch)
