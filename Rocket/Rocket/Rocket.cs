@@ -13,28 +13,48 @@ namespace Rocket
 
     class Rocket
     {
-        private Texture2D rocket;
+        private Texture2D texture;
 
-        public Vector2 acceleration = new Vector2(0, 0);                //this vector holds all forces that should be applied
-        public Vector2 forces = new Vector2(0, 0);
-        public Vector2 coords { get; set; } = new Vector2(300, 300);                 //this holds the rockets position
-        float scale = 1f;                                                       //The "scale" of the drawn rocket (used for eventual zooming?)
+        public Vector2 acceleration = new Vector2(0, 0);       //this vector holds all forces that should be applied
+        public Vector2 forces = new Vector2(0, 0);             
+        public Vector2 coords = new Vector2(0, -6371000);      //this holds the rockets position
+        float scale = 1f;                                      //The "scale" of the drawn rocket (used for eventual zooming?)
+        public Vector2 origin = new Vector2(0, 0);
 
-        public int rocketArea { get; }                  //Used for Air Resistance calculations
-        public float dragCoefficient;
-        float mass;                                     //Total mass of rocket
-        float fuelcapacity;                             //should be 85% of rocket mass
-        float fuel;                                     //Remaining fuel
-        float engineEfficiency;                         // Kn thrust/liter fuel
+        public int rocketArea { get; }                         //Used for Air Resistance calculations
+        public float dragCoefficient;                          //based on rocket "shape"
+        float mass;                                            //Total mass of rocket
+        float fuelcapacity;                                    //should be 85% of rocket mass
+        float fuel;                                            //Remaining fuel
+        float engineEfficiency;                                // Kn thrust/liter fuel
 
-        int rotation;                                   //Rotation of rockets nose relative to earth (or closest body??)
-        float altitude;                                 //Distance from earths sealevel
+        int rotation = 0;                                      //Rotation of rocket, in degrees
+        float altitude;                                        //Distance from earths sealevel
+        
+        public Rocket()
+        {
+            //todo
 
+        }
+
+        public Vector2 RotateDegrees(Vector2 v, int degrees)
+        {
+
+            double cos = Math.Cos(MathHelper.ToRadians(degrees));
+            double sin = Math.Sin(MathHelper.ToRadians(degrees));
+
+            float rX = (float) ((v.X * cos) - (v.Y * sin));
+            float rY = (float) ((v.X * sin) + (v.Y * cos));
+
+            return new Vector2(rX, rY);
+        }
 
 
         public void Load(Texture2D tex)
         {
-            rocket = tex;
+            texture = tex;
+            origin.X = (tex.Width / 2);
+            origin.Y = (tex.Height / 2);
         }
 
 
@@ -43,12 +63,12 @@ namespace Rocket
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Left))
             {
-                acceleration.X -= 2;
+                rotation -= 5;
             }
 
             if (state.IsKeyDown(Keys.Right))
             {
-                acceleration.X += 2;
+                rotation += 5;
             }
             if (state.IsKeyDown(Keys.Down))
             {
@@ -72,14 +92,15 @@ namespace Rocket
             if (acceleration.Y > 0)
                 acceleration.Y -= 1;
 
+
             //Apply all forces every step to change position
-            coords += acceleration;
+            //forces += acceleration;
+            coords += (RotateDegrees(acceleration, rotation));
         }
 
         public void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(rocket, coords, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            spritebatch.Draw(texture, coords, null, Color.White, (MathHelper.ToRadians(rotation)), origin, scale, SpriteEffects.None, 0f);
         }
-
     }
 }

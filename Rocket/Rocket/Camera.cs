@@ -6,30 +6,50 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Rocket.Content
+namespace Rocket
 {
     class Camera
     {
         //fönstrets center relativit till fönstret i pixlar.
-        private Vector2 ViewportCenter = new Vector2(0, 0);
-        public float zoom {get; set;} = 1.0f;
+        public Viewport viewport;
+        public Vector2 viewportCenter;
+        public float zoom { get; set; }
 
         //Kamerans position i världen, (alltså där raketen är)
-        private Vector2 position = new Vector2(0, 0);
-        private Rocket r;
+        public Vector2 position;
+        private Rocket rocket;
 
-
-        public Camera(Rocket _r) //skicka med raketen som kameran ska följa
+        public Camera(Rocket r, Viewport v)
         {
-            r = _r;
+            viewport = v;
+            rocket = r;
+
+            viewportCenter = new Vector2(0, 0);
+            viewportCenter.X = v.Width / 2;
+            viewportCenter.Y = v.Height / 2;
+
+            zoom = 1.0f;
+            position = new Vector2(0, 0);
+
         }
+        //separer i viewmatrix, worldmatrix, projectionmatrix?
 
-        public Matrix getTranslationMatrix() //magi
+        public Matrix getViewMatrix() //komplicerat, men ändå inte. Monogame sköter allt svårt.
         {
-            return Matrix.CreateTranslation(
-                (int)position.X, (int)position.Y, 0) *
-                Matrix.CreateScale(new Vector3(zoom, zoom, 0)) *
-                Matrix.CreateTranslation(ViewportCenter.X, ViewportCenter.Y, 0);
+
+
+            return
+                (
+                Matrix.Identity *                                                   //matris multiplikation sker "baklänges"
+                Matrix.CreateTranslation(new Vector3(-position, 0.0f)) *            //nerifrån och upp
+                Matrix.CreateTranslation(new Vector3(viewportCenter, 0.0f)) *       //först skalar vi, sedan "flyttar" vi raketen till centrumet av skärmen
+                Matrix.CreateScale(new Vector3(zoom, zoom, 1))
+                );
+
+            //works!
+            //använd basiceffect istället för en standardiserad cameraclass??
+            //http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/
+            //
         }
 
         public void Zoom(float amount)
@@ -44,17 +64,11 @@ namespace Rocket.Content
 
         public void Update()
         {
-            //Kamerana centreras i mitten av skärmen, osäker på om detta ska ske varje tick eller 
-            //varje gång man trycker på en knapp efter man resizat
-            ViewportCenter.X = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2;
-            ViewportCenter.Y = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2;
-
             //sätt kamerans världsliga position till raketens position eftersom vi
             //vill följa raketen
-            position.X = r.coords.X;
-            position.Y = r.coords.Y;
-
-            //https://roguesharp.wordpress.com/2014/07/13/tutorial-5-creating-a-2d-camera-with-pan-and-zoom-in-monogame/
+            position.X = rocket.coords.X;
+            position.Y = rocket.coords.Y;
+            Console.WriteLine(((int)position.X) + " " + ((int)position.Y));
 
 
         }

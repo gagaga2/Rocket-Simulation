@@ -12,13 +12,16 @@ namespace Rocket
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Rocket player1 = new Rocket();
-        Earth earth1 = new Earth();
+        Rocket rocket;
+        Earth earth;
+        Camera camera;
 
+        Rocket rocket2;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
         }
 
         /// <summary>
@@ -31,6 +34,13 @@ namespace Rocket
         {
             // TODO: Add your initialization logic here
 
+            rocket = new Rocket();
+
+            rocket2 = new Rocket();
+
+            camera = new Camera(rocket, GraphicsDevice.Viewport);
+            earth = new Earth();
+
             base.Initialize();
         }
 
@@ -42,10 +52,10 @@ namespace Rocket
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            rocket.Load(Content.Load<Texture2D>("rocket"));
+            earth.Load(Content.Load<Model>("Earth"));
 
-            player1.Load(Content.Load<Texture2D>("rocket"));
-            earth1.Load(Content.Load<Model>("Earth"));
-
+            rocket2.Load(Content.Load<Texture2D>("rocket"));
             // TODO: use this.Content to load your game content here
         }
 
@@ -70,7 +80,8 @@ namespace Rocket
 
             // TODO: Add your update logic here
 
-            player1.Update();
+            rocket.Update();
+            camera.Update();
 
             base.Update(gameTime);
         }
@@ -83,11 +94,15 @@ namespace Rocket
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            
+            var viewmatrix = camera.getViewMatrix();
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            spriteBatch.Begin(transformMatrix: viewmatrix);
 
-            player1.Draw(spriteBatch);
-            earth1.DrawModel();
+            rocket.Draw(spriteBatch);
+
+            rocket2.Draw(spriteBatch);
+            earth.DrawModel(camera);
 
             spriteBatch.End();
             base.Draw(gameTime);
