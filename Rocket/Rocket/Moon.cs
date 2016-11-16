@@ -21,9 +21,9 @@ namespace Rocket
             this.radian = 1737;
         }
 
-        public int GetDistance(Rocket r)
+        public int GetDistance(Rocket r) //WIP
         {
-            return 10;
+            return 0;
         }
 
         public void Draw(SpriteBatch spritebatch)
