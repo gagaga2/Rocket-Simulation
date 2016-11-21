@@ -68,7 +68,7 @@ namespace Rocket
             //vill följa raketen
             position.X = rocket.coords.X;
             position.Y = rocket.coords.Y;
-            Console.WriteLine(((int)position.X) + " " + ((int)position.Y));
+            //Console.WriteLine(((int)position.X) + " " + ((int)position.Y));
 
 
         }

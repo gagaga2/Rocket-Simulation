@@ -15,6 +15,7 @@ namespace Rocket
         Rocket rocket;
         Earth earth;
         Camera camera;
+        UniverseManager universe;
 
         Rocket rocket2;
         public Game1()
@@ -41,6 +42,7 @@ namespace Rocket
             camera = new Camera(rocket, GraphicsDevice.Viewport);
             earth = new Earth();
 
+            universe = new UniverseManager(rocket, earth, new Moon());
             base.Initialize();
         }
 
@@ -52,10 +54,10 @@ namespace Rocket
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            rocket.Load(Content.Load<Texture2D>("rocket"));
+            rocket.Load(Content.Load<Texture2D>("rocket"), new Vector2(0, 0)); //6371000
             earth.Load(Content.Load<Model>("Earth"));
 
-            rocket2.Load(Content.Load<Texture2D>("rocket"));
+            rocket2.Load(Content.Load<Texture2D>("rocket"), new Vector2(0, 0));
             // TODO: use this.Content to load your game content here
         }
 
@@ -82,6 +84,7 @@ namespace Rocket
 
             rocket.Update();
             camera.Update();
+            universe.Update();
 
             base.Update(gameTime);
         }

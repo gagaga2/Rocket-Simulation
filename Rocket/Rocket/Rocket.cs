@@ -15,15 +15,16 @@ namespace Rocket
     {
         private Texture2D texture;
 
+        public Vector2 startPosition = new Vector2(0, 0);
         public Vector2 acceleration = new Vector2(0, 0);       //this vector holds all forces that should be applied
         public Vector2 forces = new Vector2(0, 0);             
-        public Vector2 coords = new Vector2(0, -6371000);      //this holds the rockets position
+        public Vector2 coords = new Vector2(0, 0);             //this holds the rockets position
         float scale = 1f;                                      //The "scale" of the drawn rocket (used for eventual zooming?)
         public Vector2 origin = new Vector2(0, 0);
 
         public int rocketArea { get; }                         //Used for Air Resistance calculations
         public float dragCoefficient;                          //based on rocket "shape"
-        float mass;                                            //Total mass of rocket
+        public float mass;                                     //Total mass of rocket
         float fuelcapacity;                                    //should be 85% of rocket mass
         float fuel;                                            //Remaining fuel
         float engineEfficiency;                                // Kn thrust/liter fuel
@@ -37,9 +38,9 @@ namespace Rocket
 
         }
 
+
         public Vector2 RotateDegrees(Vector2 v, int degrees)
         {
-
             double cos = Math.Cos(MathHelper.ToRadians(degrees));
             double sin = Math.Sin(MathHelper.ToRadians(degrees));
 
@@ -50,16 +51,18 @@ namespace Rocket
         }
 
 
-        public void Load(Texture2D tex)
+        public void Load(Texture2D _texture, Vector2 _startposition)
         {
-            texture = tex;
-            origin.X = (tex.Width / 2);
-            origin.Y = (tex.Height / 2);
+            texture = _texture;
+            origin.X = (_texture.Width / 2);
+            origin.Y = (_texture.Height / 2);
+            coords = _startposition;
         }
 
 
         public void Update()
         {
+
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Left))
             {

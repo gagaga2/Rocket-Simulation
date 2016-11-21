@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,12 +14,32 @@ namespace Rocket
         Earth earth;
         Moon moon;
 
+        double rocketDistanceFromEarth = 0;
+        float rocketRotationRelativeToEarth = 0;
 
-        public UniverseManager(Rocket r, Earth e, Moon m)
+        public UniverseManager(Rocket _rocket, Earth _earth, Moon _moon)
         {
-            this.rocket = r;
-            this.earth = e;
-            this.moon = m;
+            rocket = _rocket;
+            earth = _earth;
+            moon = _moon;
+        }
+
+        public float getRocketRotationRelativeToEarth()
+        {
+            float x = rocket.coords.X;
+            float y = -rocket.coords.Y;
+            float angle = 0;
+
+            angle = (float)(Math.Atan2(y, x) * 180 / Math.PI);
+            angle = angle % 360;
+
+            if (angle < 0)
+            {
+                angle += 360;
+            }
+
+            Console.WriteLine(angle);
+            return angle;
         }
 
         public double GetDistanceFromEarth()
@@ -26,7 +47,7 @@ namespace Rocket
             float dx = this.rocket.coords.X - this.earth.position.X;
             float dy = this.rocket.coords.Y - this.earth.position.Y;
 
-            return (dx * dx) + (dy * dy);   //osäker, borde funka, vill undvika math.* funktionerna pga performance
+            return Math.Sqrt((dx * dx) + (dy * dy));   //osäker, borde funka, vill undvika math.* funktionerna pga performance
         }
 
         public double GetEarthAirDensity()
@@ -34,6 +55,12 @@ namespace Rocket
             //retunera luftdensiteten utifrån tabellvärden baserat på GetDistanceFromEarth var 10:nde kilometr.
             int i = (int) Math.Round(GetDistanceFromEarth() / 10);
             return this.earth.AirDensity[i];
+        }
+
+        public void ApplyEarthGravity ()
+        {
+            double G = 6.674E-11;
+            double F = G * ((rocket.mass * earth.mass) / Math.Pow(GetDistanceFromEarth(), 2));
         }
 
         public void ApplyAirResistance()
@@ -45,12 +72,13 @@ namespace Rocket
 
             float drag = (float) ((p * c * a * (v * v)) / 2);       //Drag Equation
 
-            this.rocket.forces.Y -= drag;            //FUNGERAR BARA DÅ RAKETEN ÅKER "UPP", I Y LED.
+            rocket.forces.Y -= drag;            //FUNGERAR BARA DÅ RAKETEN ÅKER "UPP", I Y LED.
         }                                            //orolig över all variabel casting/ olika typer. ska hålla koll på i framtiden då det kan brista här
 
         public void Update()
         {
-            //update rockets distance
+            rocketDistanceFromEarth = GetDistanceFromEarth();
+            rocketRotationRelativeToEarth = getRocketRotationRelativeToEarth();
         }
 
         public void Draw()
