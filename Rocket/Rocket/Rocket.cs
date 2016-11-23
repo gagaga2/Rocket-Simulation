@@ -13,29 +13,28 @@ namespace Rocket
 
     class Rocket
     {
+        private UniverseManager universe;
         private Texture2D texture;
 
-        public Vector2 startPosition = new Vector2(0, 0);
+        public Vector2 startPosition = new Vector2(0, 0); //används ej
         public Vector2 acceleration = new Vector2(0, 0);       //this vector holds all forces that should be applied
-        public Vector2 forces = new Vector2(0, 0);             
-        public Vector2 coords = new Vector2(0, 0);             //this holds the rockets position
-        float scale = 1f;                                      //The "scale" of the drawn rocket (used for eventual zooming?)
-        public Vector2 origin = new Vector2(0, 0);
+        public Vector2 position = new Vector2(0, 0);             //this holds the rockets position
+        public Vector2 center = new Vector2(0, 0);
 
-        public int rocketArea { get; }                         //Used for Air Resistance calculations
+        public int area { get; }                         //Used for Air Resistance calculations
         public float dragCoefficient;                          //based on rocket "shape"
-        public float mass;                                     //Total mass of rocket
-        float fuelcapacity;                                    //should be 85% of rocket mass
+        public float mass = 10000;                                     //Total mass of rocket
+        float fuelCapacity;                                    //should be 85% of rocket mass
         float fuel;                                            //Remaining fuel
         float engineEfficiency;                                // Kn thrust/liter fuel
+        float enginePower = 0;
 
         int rotation = 0;                                      //Rotation of rocket, in degrees
         float altitude;                                        //Distance from earths sealevel
         
-        public Rocket()
+        public Rocket(UniverseManager _universe)
         {
-            //todo
-
+            universe = _universe;
         }
 
 
@@ -50,60 +49,58 @@ namespace Rocket
             return new Vector2(rX, rY);
         }
 
+        public void FireEngines()
+        {
+            float power = 10 * enginePower;
+            acceleration = RotateDegrees(new Vector2(0, -power), rotation);
+        }
+
 
         public void Load(Texture2D _texture, Vector2 _startposition)
         {
             texture = _texture;
-            origin.X = (_texture.Width / 2);
-            origin.Y = (_texture.Height / 2);
-            coords = _startposition;
+            center.X = (_texture.Width / 2);
+            center.Y = (_texture.Height / 2);
+            position = _startposition;
         }
-
 
         public void Update()
         {
+            if (Math.Abs(universe.GetDistanceFromEarth()) > universe.earth.radian)
+            {
+                acceleration += universe.GetEarthGravitationalPull();
+            }
 
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Left))
             {
                 rotation -= 5;
             }
-
             if (state.IsKeyDown(Keys.Right))
             {
                 rotation += 5;
             }
             if (state.IsKeyDown(Keys.Down))
             {
-                acceleration.Y += 2;
+                enginePower -= 0.1f;
             }
             if (state.IsKeyDown(Keys.Up))
             {
-                acceleration.Y -= 2;
+                enginePower += 0.1f;
+            }
+            if (state.IsKeyDown(Keys.Space))
+            {
+                FireEngines();
             }
 
-            //Slowwly soften acceleration
-            if (acceleration.X < 0)
-                acceleration.X += 1;
-
-            if (acceleration.X > 0)
-                acceleration.X -= 1;
-
-            if (acceleration.Y < 0)
-                acceleration.Y += 1;
-
-            if (acceleration.Y > 0)
-                acceleration.Y -= 1;
-
-
             //Apply all forces every step to change position
-            //forces += acceleration;
-            coords += (RotateDegrees(acceleration, rotation));
+            position += acceleration;
+            acceleration = Vector2.Zero;
         }
 
         public void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(texture, coords, null, Color.White, (MathHelper.ToRadians(rotation)), origin, scale, SpriteEffects.None, 0f);
+            spritebatch.Draw(texture, position, null, Color.White, (MathHelper.ToRadians(rotation)), center, 1f, SpriteEffects.None, 0f);
         }
     }
 }
