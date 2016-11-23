@@ -69,7 +69,6 @@ namespace Rocket
             Vector2 gravitationalPullDirection = Vector2.Normalize(-rocket.position);
 
 
-            Console.WriteLine(acceleration); //DEBUG
             return gravitationalPullDirection * acceleration;
         }
 

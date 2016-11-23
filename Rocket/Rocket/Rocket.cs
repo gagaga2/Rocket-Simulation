@@ -52,7 +52,7 @@ namespace Rocket
         public void FireEngines()
         {
             float power = 10 * enginePower;
-            acceleration = RotateDegrees(new Vector2(0, -power), rotation);
+            acceleration += RotateDegrees(new Vector2(0, -power), rotation);
         }
 
 
@@ -92,7 +92,7 @@ namespace Rocket
             {
                 FireEngines();
             }
-
+            Console.WriteLine(acceleration);
             //Apply all forces every step to change position
             position += acceleration;
             acceleration = Vector2.Zero;
