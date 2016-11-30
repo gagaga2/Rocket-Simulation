@@ -80,3 +80,30 @@ C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Shar
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.RawInput.xml
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\obj\x86\Debug\Rocket.csprojResolveAssemblyReference.cache
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\obj\x86\Debug\Rocket.exe
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\obj\x86\Debug\Rocket.pdb
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\Content\Earth.xnb
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\Content\rocket.xnb
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\Rocket.exe
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\Rocket.pdb
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.RawInput.dll
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.RawInput.xml
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+C:\Users\joel.jonssonrapp\Source\Repos\Rocket-Simulation\Rocket\Rocket\obj\x86\Debug\Rocket.csprojResolveAssemblyReference.cache
