@@ -16,8 +16,8 @@ namespace Rocket
 
         public Earth()
         {
-            mass = 5.34E+24;
-            radian = 6371000;
+            mass = 5.972E+24;
+            radian = 6371200; //Meters
             position = new Vector3(0, 0, 0);
 
             //AirDensity[0] = abababab; Atmosfärens tabell ska fyllas i vid skapelse av planeten
