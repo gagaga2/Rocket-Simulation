@@ -11,7 +11,6 @@ namespace Rocket
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
         UniverseManager universe;
 
         public Game1()
@@ -32,6 +31,7 @@ namespace Rocket
             // TODO: Add your initialization logic here
 
             universe = new UniverseManager(GraphicsDevice.Viewport);
+
             base.Initialize();
         }
 
@@ -46,6 +46,8 @@ namespace Rocket
 
             universe.rocket.Load(Content.Load<Texture2D>("rocket"), new Vector2(0, -6371200)); //6371200 meter radie på jorden.
             universe.earth.Load(Content.Load<Model>("Earth"));
+
+            universe.camera.Load(Content.Load<SpriteFont>("basicFont"));
 
             // TODO: use this.Content to load your game content here
         }
@@ -87,7 +89,7 @@ namespace Rocket
             // TODO: Add your drawing code here
 
             universe.Draw(spriteBatch);
-
+            universe.camera.DrawGUI(spriteBatch);
             base.Draw(gameTime);
         }
     }

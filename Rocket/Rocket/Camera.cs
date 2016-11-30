@@ -20,6 +20,9 @@ namespace Rocket
         public Vector2 position;
         private UniverseManager universe;
 
+        //GUI
+        SpriteFont font;
+
         public Camera(UniverseManager _universe, Viewport _viewport)
         {
             universe = _universe;
@@ -68,6 +71,18 @@ namespace Rocket
                 zoom *= 1.5f;
                 universe.earth.zoom *= 1.5f;
             }
+        }
+
+        public void Load(SpriteFont _font)
+        {
+            font = _font;
+        }
+
+        public void DrawGUI(SpriteBatch spr)
+        {
+            spr.Begin();
+            spr.DrawString(font, "Rocket", viewportCenter, Color.Black);
+            spr.End();
         }
     }
 }
