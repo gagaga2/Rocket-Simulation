@@ -13,7 +13,7 @@ namespace Rocket
         public double mass { get; set; }                         /// mass of the planet
         public int radian { get; set; }                          /// radian of the planet
         public Vector3 position { get; set; }             /// position in world
-        public float scale { get; set; } = 1;                    /// used to scale (zoom)
+        public float zoom { get; set; } = 1;                    /// used to scale (zoom)
         public Model model;                                      /// 3D model to use
 
         public Planet()
@@ -50,7 +50,8 @@ namespace Rocket
                     /// in the right place, relative to the camera.
                     /// HOLY FUCK DET FUNKAR!!!!!!!!
 
-                    effect.View = Matrix.CreateLookAt(new Vector3(c.position.X, -c.position.Y, 10), new Vector3(c.position.X, -c.position.Y, 0), Vector3.UnitY) *
+                    effect.View = Matrix.CreateLookAt(new Vector3(c.position.X, -c.position.Y, 10), new Vector3(c.position.X, -c.position.Y, 0), Vector3.UnitY) * 
+                                  Matrix.CreateScale(zoom, zoom, 1) *
                                   Matrix.CreateTranslation(new Vector3(0, 0, 0));
 
                     /// Stores the projection matrix, which gets the model projected
