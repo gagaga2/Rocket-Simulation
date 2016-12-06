@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -12,6 +13,7 @@ namespace Rocket
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         UniverseManager universe;
+        GUI gui;
 
         public Game1()
         {
@@ -30,7 +32,8 @@ namespace Rocket
         {
             // TODO: Add your initialization logic here
 
-            universe = new UniverseManager(GraphicsDevice.Viewport);
+            universe = new UniverseManager();
+            gui = new GUI();
 
             base.Initialize();
         }
@@ -43,13 +46,12 @@ namespace Rocket
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            
+            universe.rocket.Load(Content.Load<Texture2D>("rocket"), new Vector2(0, -6371200)); //6371200 meter radie på jorden. //-384400000 till månen 
+            universe.earth.Load(GraphicsDevice, 512);
+            universe.moon.Load(GraphicsDevice, 16);
 
-            universe.rocket.Load(Content.Load<Texture2D>("rocket"), new Vector2(0, -6371200)); //6371200 meter radie på jorden.
-            universe.earth.Load(Content.Load<Model>("Earth"));
-
-            universe.camera.Load(Content.Load<SpriteFont>("basicFont"));
-
-            // TODO: use this.Content to load your game content here
+            gui.Load(Content.Load<SpriteFont>("basicFont"), universe);
         }
 
         /// <summary>
@@ -84,12 +86,12 @@ namespace Rocket
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DarkBlue);
 
             // TODO: Add your drawing code here
 
-            universe.Draw(spriteBatch);
-            universe.camera.DrawGUI(spriteBatch);
+            universe.Draw(spriteBatch, GraphicsDevice);
+            gui.Draw(spriteBatch, GraphicsDevice);
             base.Draw(gameTime);
         }
     }
