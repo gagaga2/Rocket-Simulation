@@ -14,14 +14,13 @@ namespace Rocket
         public Rocket rocket;
         public Earth earth;
         public Moon moon;
-        public Camera camera;
+        public float zoom = 1f;
 
-        public UniverseManager(Viewport view)
+        public UniverseManager()
         {
             rocket = new Rocket(this);
-            earth = new Earth();
-            moon = new Moon();
-            camera = new Camera(this, view);
+            earth = new Earth(this);
+            moon = new Moon(this);
         }
 
         public float getRocketRotationRelativeToEarth()
@@ -79,29 +78,36 @@ namespace Rocket
             float v = this.rocket.acceleration.Y;
             float c = this.rocket.dragCoefficient;
 
-            float drag = (float) ((p * c * a * (v * v)) / 2);       //Drag Equation
+            float drag = (float)((p * c * a * (v * v)) / 2);
 
-            rocket.acceleration.Y -= drag;            //FUNGERAR BARA DÅ RAKETEN ÅKER "UPP", I Y LED.
-        }                                            //orolig över all variabel casting/ olika typer. ska hålla koll på i framtiden då det kan brista här
+            rocket.acceleration.Y -= drag;     //måste åtgärdas, fungerar bara i Y-led   
+        }   
 
         public void Update()
         {
             rocket.Update();
-            camera.Update();
 
+
+
+
+            KeyboardState state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Z))
+            {
+                //kommer aldrig bli mindre än 0, vilket är bra
+                zoom *= 0.5f;
+            }
+            if (state.IsKeyDown(Keys.X))
+            {
+                zoom *= 1.5f;
+            }
         }
 
-        public void Draw(SpriteBatch spritebatch)
+        public void Draw(SpriteBatch spritebatch, GraphicsDevice graphics)
         {
-            var viewmatrix = camera.getViewMatrix();
             // TODO: Add your drawing code here
-            spritebatch.Begin(transformMatrix: viewmatrix);
-
-            Vector2 bla = GetEarthGravitationalPull();
-            rocket.Draw(spritebatch);
-            earth.DrawModel(camera);
-
-            spritebatch.End();
+            earth.Draw(graphics, zoom);
+            moon.Draw(graphics, zoom);
+            rocket.Draw(spritebatch, graphics, zoom);
 
             //rita värden av funktioner som text på skärmen
         }

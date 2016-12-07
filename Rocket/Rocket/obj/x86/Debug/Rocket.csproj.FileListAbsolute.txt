@@ -80,3 +80,5 @@ C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Shar
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.RawInput.xml
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\obj\x86\Debug\Rocket.csprojResolveAssemblyReference.cache
+C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\basicFont.xnb
+C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\basicFont.xnb
