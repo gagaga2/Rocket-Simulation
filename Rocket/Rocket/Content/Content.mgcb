@@ -44,3 +44,9 @@
 /processorParam:TextureFormat=DxtCompressed
 /build:Earth.fbx
 
+#begin basicFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:basicFont.spritefont
+

@@ -14,8 +14,12 @@ namespace Rocket
 
         public double[] AirDensity = new double[9];       //tabell med luftdensitetsvärden hämtad från (finns också i dokumentationen) http://ccmc.gsfc.nasa.gov/modelweb/models/msis_vitmo.php
 
-        public Earth()
+        public Earth(UniverseManager universe)
         {
+            this.universe = universe;
+
+            innerColor = Color.Green;
+            outerColor = Color.Blue;
             mass = 5.972E+24;
             radian = 6371200; //Meters
             position = new Vector3(0, 0, 0);

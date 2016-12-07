@@ -16,14 +16,14 @@ namespace Rocket
         private UniverseManager universe;
         private Texture2D texture;
 
-        public Vector2 startPosition = new Vector2(0, 0); //används ej
+        public Vector2 startPosition = new Vector2(0, 0);      //används ej
         public Vector2 acceleration = new Vector2(0, 0);       //this vector holds all forces that should be applied
-        public Vector2 position = new Vector2(0, 0);             //this holds the rockets position
+        public Vector2 position = new Vector2(0, 0);           //this holds the rockets position
         public Vector2 center = new Vector2(0, 0);
 
-        public int area { get; }                         //Used for Air Resistance calculations
+        public int area { get; }                               //Used for Air Resistance calculations
         public float dragCoefficient;                          //based on rocket "shape"
-        public float mass = 10000;                                     //Total mass of rocket
+        public float mass = 10000;                             //Total mass of rocket
         float fuelCapacity;                                    //should be 85% of rocket mass
         float fuel;                                            //Remaining fuel
         float engineEfficiency;                                // Kn thrust/liter fuel
@@ -66,9 +66,14 @@ namespace Rocket
 
         public void Update()
         {
+            //om vi är "ovanför jordens yta", applicera gravitationskraften 
             if (Math.Abs(universe.GetDistanceFromEarth()) > universe.earth.radian)
             {
                 acceleration += universe.GetEarthGravitationalPull();
+            } else
+            {
+                //annars, om vi är "under", ta bort alla acceleration så vi inte sjunker igenom.
+                acceleration = Vector2.Zero;
             }
 
             KeyboardState state = Keyboard.GetState();
@@ -92,15 +97,24 @@ namespace Rocket
             {
                 FireEngines();
             }
-            Console.WriteLine(acceleration);
+
+            //Console.WriteLine(acceleration);
             //Apply all forces every step to change position
             position += acceleration;
-            acceleration = Vector2.Zero;
+            
         }
 
-        public void Draw(SpriteBatch spritebatch)
+        public void Draw(SpriteBatch spritebatch, GraphicsDevice graphics, float zoom)
         {
+            Matrix viewMatrix = Matrix.Identity *
+                                Matrix.CreateTranslation(new Vector3(-position, 0)) *
+                                //multiplicera in "skala"-matrisen       
+                                Matrix.CreateScale(new Vector3(zoom, zoom, 1)) *
+                                Matrix.CreateTranslation(new Vector3((graphics.Viewport.Width / 2), (graphics.Viewport.Height  / 2), 0.0f));
+
+            spritebatch.Begin(transformMatrix: viewMatrix);
             spritebatch.Draw(texture, position, null, Color.White, (MathHelper.ToRadians(rotation)), center, 1f, SpriteEffects.None, 0f);
+            spritebatch.End();
         }
     }
 }

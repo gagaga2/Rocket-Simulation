@@ -10,58 +10,72 @@ namespace Rocket
 {
     class Planet
     {
-        public double mass { get; set; }                         /// mass of the planet
-        public int radian { get; set; }                          /// radian of the planet
-        public Vector3 position { get; set; }             /// position in world
-        public float zoom { get; set; } = 1;                    /// used to scale (zoom)
-        public Model model;                                      /// 3D model to use
+        public UniverseManager universe;
 
-        public Planet()
+        public double mass { get; set; } = 1;
+        public int radian { get; set; } = 1;     
+        public Vector3 position { get; set; } = Vector3.Zero;
+
+        public Color innerColor = Color.Black;
+        public Color outerColor = Color.White;
+
+        Matrix world;
+        Matrix view;
+        Matrix projection;
+
+        VertexBuffer vertexbuffer;
+        BasicEffect basicEffect;
+        int triangles;
+
+        public void Load(GraphicsDevice graphics, int triangles)
         {
 
-        }
-        public Planet(double _mass, int _radian, Vector2 _position)
-        {
-            mass = _mass;
-            radian = _radian;
-            position = new Vector3(_position.X, _position.Y, 0);
+            this.triangles = triangles;
+            int totalVertices = triangles * 3;
 
-        }
+            basicEffect = new BasicEffect(graphics);
+            VertexPositionColor[] vertices = new VertexPositionColor[totalVertices];
 
-        public void Load(Model _model)
-        {
-            this.model = _model;
-        }
 
-        public void DrawModel(Camera c)
-        {
-            foreach (ModelMesh mesh in model.Meshes)
+            for (int i = 0; i < vertices.Length; i += 3)
             {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
+                float angle = ((float)(2 * Math.PI) / triangles);
+                float angleFirstSide = (angle + (angle * i));
+                float angleSecondSide = (angle + (angle * (i + 1)));
 
-                    /// Stores the world matrix for the model, which transforms the 
-                    /// model to be in the correct position, scale, and rotation
-                    /// in the game world.
+                vertices[i] = new VertexPositionColor(position, innerColor);
+                vertices[i + 1] = new VertexPositionColor(position + new Vector3((float) (radian * Math.Sin(angleFirstSide)), (float) (radian * Math.Cos(angleFirstSide)), 0), outerColor); //beter sig konstigt
+                vertices[i + 2] = new VertexPositionColor(position + new Vector3((float) (radian * Math.Sin(angleSecondSide)), (float) (radian * Math.Cos(angleSecondSide)), 0), Color.Green);
+            }
 
-                    effect.World = Matrix.CreateTranslation(new Vector3(0, 0, 0)) * Matrix.CreateScale(radian, radian, 0);
+            vertexbuffer = new VertexBuffer(graphics, typeof(VertexPositionColor), vertices.Length, BufferUsage.WriteOnly);
+            vertexbuffer.SetData<VertexPositionColor>(vertices);
+        }
 
-                    /// Stores the view matrix for the model, which gets the model
-                    /// in the right place, relative to the camera.
-                    /// HOLY FUCK DET FUNKAR!!!!!!!!
+        public void Draw(GraphicsDevice graphics, float zoom)
+        {
+            world = Matrix.CreateTranslation(0, 0, 0);
+            
+            //IT WORKS!
+            view = Matrix.CreateLookAt(new Vector3(universe.rocket.position.X, -universe.rocket.position.Y, 10), new Vector3(universe.rocket.position.X, -universe.rocket.position.Y, 0), Vector3.UnitY) *
+                   Matrix.CreateScale(zoom, zoom, 1);
 
-                    effect.View = Matrix.CreateLookAt(new Vector3(c.position.X, -c.position.Y, 10), new Vector3(c.position.X, -c.position.Y, 0), Vector3.UnitY) * 
-                                  Matrix.CreateScale(zoom, zoom, 1) *
-                                  Matrix.CreateTranslation(new Vector3(0, 0, 0));
+            projection = Matrix.CreateOrthographic(graphics.Viewport.Width, graphics.Viewport.Height, 0.1f, 10.0f);
 
-                    /// Stores the projection matrix, which gets the model projected
-                    /// onto the screen in the correct way.  Essentially, this defines the
-                    /// properties of the camera, like lens and such.
 
-                    effect.Projection = Matrix.CreateOrthographic(c.viewport.Width, c.viewport.Height, 0.1f, 10f);
-                }
+            basicEffect.World = world;
+            basicEffect.View = view;
+            basicEffect.Projection = projection;
+            basicEffect.VertexColorEnabled = true;
 
-                mesh.Draw();
+            graphics.SetVertexBuffer(vertexbuffer);
+            RasterizerState rasterizerState = new RasterizerState();
+            rasterizerState.CullMode = CullMode.None;
+
+            foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                graphics.DrawPrimitives(PrimitiveType.TriangleList, 0, triangles);
             }
         }
     }
