@@ -41,26 +41,28 @@ namespace Rocket
             return angle;
         }
 
-        public double GetDistanceFromEarth()
+        public double GetDistanceFromPlanetCore(Planet planet)
         {
-            float dx = this.rocket.position.X - this.earth.position.X;
-            float dy = this.rocket.position.Y - this.earth.position.Y;
+            float dx = this.rocket.position.X - planet.position.X;
+            float dy = this.rocket.position.Y - planet.position.Y;
 
             return Math.Sqrt((dx * dx) + (dy * dy));
         }
 
-        public double GetEarthAirDensity()
+        public double GetDistanceFromPlanetSurface(Planet planet)
         {
-            //retunera luftdensiteten utifrån tabellvärden baserat på GetDistanceFromEarth var 10:nde kilometr.
-            int i = (int) Math.Round(GetDistanceFromEarth() / 10);
-            return earth.AirDensity[i];
+            float dx = this.rocket.position.X - planet.position.X;
+            float dy = this.rocket.position.Y - planet.position.Y;
+
+            return (Math.Sqrt((dx * dx) + (dy * dy)) - planet.radian);
         }
 
-        public Vector2 GetEarthGravitationalPull()
+
+        public Vector2 GetPlanetGravitationalPull(Planet planet)
         {
             double G = 6.674E-11;
-            double r2 = Math.Pow(GetDistanceFromEarth(), 2);
-            float F = (float) (G * ((rocket.mass * earth.mass) / r2));
+            double r2 = Math.Pow(GetDistanceFromPlanetCore(planet), 2);
+            float F = (float) (G * ((rocket.mass * planet.mass) / r2));
             //F är i newtons, därför måste vi dela den på raketens massa för att få accelerationen
             float acceleration = (F / rocket.mass);
 
@@ -71,16 +73,16 @@ namespace Rocket
             return gravitationalPullDirection * acceleration;
         }
 
-        public void ApplyAirResistance()
+        public float ApplyEarthAirResistance(Rocket rocket)
         {
-            int a = this.rocket.area;
-            double p = GetEarthAirDensity();
-            float v = this.rocket.acceleration.Y;
-            float c = this.rocket.dragCoefficient;
+            int a = rocket.area;
+            double p = earth.GetEarthAirDensity(Math.Abs(GetDistanceFromPlanetSurface(earth)));
+            float v = rocket.acceleration.Y;
+            float c = rocket.dragCoefficient;
 
             float drag = (float)((p * c * a * (v * v)) / 2);
 
-            rocket.acceleration.Y -= drag;     //måste åtgärdas, fungerar bara i Y-led   
+            return drag;     //måste åtgärdas, fungerar bara i Y-led... eller?
         }   
 
         public void Update()
@@ -88,17 +90,15 @@ namespace Rocket
             rocket.Update();
 
 
-
-
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Z))
             {
                 //kommer aldrig bli mindre än 0, vilket är bra
-                zoom *= 0.5f;
+                zoom *= 0.9f;
             }
             if (state.IsKeyDown(Keys.X))
             {
-                zoom *= 1.5f;
+                zoom *= 1.1f;
             }
         }
 

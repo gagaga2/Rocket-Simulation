@@ -22,7 +22,7 @@ namespace Rocket
         public Vector2 center = new Vector2(0, 0);
 
         public int area { get; }                               //Used for Air Resistance calculations
-        public float dragCoefficient;                          //based on rocket "shape"
+        public float dragCoefficient = 1.5f;                          //based on rocket "shape"
         public float mass = 10000;                             //Total mass of rocket
         float fuelCapacity;                                    //should be 85% of rocket mass
         float fuel;                                            //Remaining fuel
@@ -67,14 +67,17 @@ namespace Rocket
         public void Update()
         {
             //om vi är "ovanför jordens yta", applicera gravitationskraften 
-            if (Math.Abs(universe.GetDistanceFromEarth()) > universe.earth.radian)
+            if (Math.Abs(universe.GetDistanceFromPlanetCore(universe.earth)) > universe.earth.radian)
             {
-                acceleration += universe.GetEarthGravitationalPull();
+                acceleration += universe.GetPlanetGravitationalPull(universe.earth);
             } else
             {
                 //annars, om vi är "under", ta bort alla acceleration så vi inte sjunker igenom.
                 acceleration = Vector2.Zero;
             }
+
+            universe.ApplyEarthAirResistance(this);
+            acceleration.Y = -universe.ApplyEarthAirResistance(this);
 
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Left))

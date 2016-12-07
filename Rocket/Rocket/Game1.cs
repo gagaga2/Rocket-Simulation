@@ -48,8 +48,8 @@ namespace Rocket
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
             universe.rocket.Load(Content.Load<Texture2D>("rocket"), new Vector2(0, -6371200)); //6371200 meter radie på jorden. //-384400000 till månen 
-            universe.earth.Load(GraphicsDevice, 512);
-            universe.moon.Load(GraphicsDevice, 16);
+            universe.earth.Load(GraphicsDevice, 1024);
+            universe.moon.Load(GraphicsDevice, 1024);
 
             gui.Load(Content.Load<SpriteFont>("basicFont"), universe);
         }

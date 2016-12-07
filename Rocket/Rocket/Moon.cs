@@ -14,11 +14,11 @@ namespace Rocket
         {
             this.universe = universe;
 
-            innerColor = Color.Red;
-            outerColor = Color.Yellow;
+            innerColor = Color.Black;
+            outerColor = Color.Gray;
             mass = 7.34767309E+22;
             radian = 1739337; //Meters 1739337
-            position = new Vector3(0, 6371200, 0);  //6371200
+            position = new Vector3(0, 39037120, 0);  //6371200 + 38400000
         }
     }
 }
