@@ -8,29 +8,17 @@ using System.Threading.Tasks;
 
 namespace Rocket
 {
-    class Moon
+    class Moon : Planet
     {
-        double mass { get; set; }                        //
-        int radian { get; set; }
-        Vector2 position { get; set; }                   //position (?,???)
-        float scale { get; set; }                        //for zoomign purposes
-
-        public Moon()
+        public Moon(UniverseManager universe)
         {
-            this.mass = 7.342E+22;
-            this.radian = 1737;
+            this.universe = universe;
+
+            innerColor = Color.Red;
+            outerColor = Color.Yellow;
+            mass = 7.34767309E+22;
+            radian = 1739337; //Meters 1739337
+            position = new Vector3(0, 6371200, 0);  //6371200
         }
-
-        public int GetDistance(Rocket r) //WIP
-        {
-            return 0;
-        }
-
-        public void Draw(SpriteBatch spritebatch)
-        {
-
-            
-        }
-
     }
 }
