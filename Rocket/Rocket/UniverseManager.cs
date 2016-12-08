@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,83 +13,37 @@ namespace Rocket
     class UniverseManager
     {
         public Rocket rocket;
-        public Earth earth;
-        public Moon moon;
         public float zoom = 1f;
+        public float timeScale = 60;
+        public Dictionary<string, Planet> planets = new Dictionary<string, Planet>();
+        public double seconds;
+
 
         public UniverseManager()
         {
-            rocket = new Rocket(this);
-            earth = new Earth(this);
-            moon = new Moon(this);
+            rocket = new Rocket();
+            planets.Add("earth", new Earth(this));
+            planets.Add("moon", new Moon(this));
         }
 
-        public float getRocketRotationRelativeToEarth()
+        public Dictionary<string, Planet> GetPlanets()
         {
-            float x = rocket.position.X;
-            float y = -rocket.position.Y;
-            float angle = 0;
-
-            angle = (float)(Math.Atan2(y, x) * 180 / Math.PI);
-            angle = angle % 360;
-
-            if (angle < 0)
-            {
-                angle += 360;
-            }
-
-            Console.WriteLine(angle);
-            return angle;
+            return planets;
         }
 
-        public double GetDistanceFromPlanetCore(Planet planet)
+        public Planet GetPlanet(string planet)
         {
-            float dx = this.rocket.position.X - planet.position.X;
-            float dy = this.rocket.position.Y - planet.position.Y;
-
-            return Math.Sqrt((dx * dx) + (dy * dy));
-        }
-
-        public double GetDistanceFromPlanetSurface(Planet planet)
-        {
-            float dx = this.rocket.position.X - planet.position.X;
-            float dy = this.rocket.position.Y - planet.position.Y;
-
-            return (Math.Sqrt((dx * dx) + (dy * dy)) - planet.radian);
+            return planets[planet];
         }
 
 
-        public Vector2 GetPlanetGravitationalPull(Planet planet)
+
+        public void Update(float timeStep)
         {
-            double G = 6.674E-11;
-            double r2 = Math.Pow(GetDistanceFromPlanetCore(planet), 2);
-            float F = (float) (G * ((rocket.mass * planet.mass) / r2));
-            //F är i newtons, därför måste vi dela den på raketens massa för att få accelerationen
-            float acceleration = (F / rocket.mass);
+            
+            rocket.Update(this, (timeStep * timeScale));
 
-            //detta ger oss en enhetsvector som "pekar" ner mot centret av universum(jorden)
-            Vector2 gravitationalPullDirection = Vector2.Normalize(-rocket.position);
-
-
-            return gravitationalPullDirection * acceleration;
-        }
-
-        public float ApplyEarthAirResistance(Rocket rocket)
-        {
-            int a = rocket.area;
-            double p = earth.GetEarthAirDensity(Math.Abs(GetDistanceFromPlanetSurface(earth)));
-            float v = rocket.acceleration.Y;
-            float c = rocket.dragCoefficient;
-
-            float drag = (float)((p * c * a * (v * v)) / 2);
-
-            return drag;     //måste åtgärdas, fungerar bara i Y-led... eller?
-        }   
-
-        public void Update()
-        {
-            rocket.Update();
-
+            seconds += (timeStep * timeScale);
 
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Z))
@@ -105,8 +60,11 @@ namespace Rocket
         public void Draw(SpriteBatch spritebatch, GraphicsDevice graphics)
         {
             // TODO: Add your drawing code here
-            earth.Draw(graphics, zoom);
-            moon.Draw(graphics, zoom);
+
+            foreach(KeyValuePair<string, Planet> p in planets)
+            {
+                p.Value.Draw(graphics, zoom);
+            }
             rocket.Draw(spritebatch, graphics, zoom);
 
             //rita värden av funktioner som text på skärmen

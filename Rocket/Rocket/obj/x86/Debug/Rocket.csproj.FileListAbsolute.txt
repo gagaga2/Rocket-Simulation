@@ -56,7 +56,6 @@ C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x8
 C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Earth.xnb
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Earth.xnb
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\rocket.xnb
-C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Earth.fbx
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Rocket.exe
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Rocket.pdb
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\MonoGame.Framework.dll

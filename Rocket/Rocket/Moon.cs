@@ -20,5 +20,10 @@ namespace Rocket
             radian = 1739337; //Meters 1739337
             position = new Vector3(0, 39037120, 0);  //6371200 + 38400000
         }
+
+        public override void Update()
+        {
+            base.Update();
+        }
     }
 }

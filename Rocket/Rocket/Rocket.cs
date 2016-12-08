@@ -13,7 +13,6 @@ namespace Rocket
 
     class Rocket
     {
-        private UniverseManager universe;
         private Texture2D texture;
 
         public Vector2 startPosition = new Vector2(0, 0);      //används ej
@@ -27,14 +26,13 @@ namespace Rocket
         float fuelCapacity;                                    //should be 85% of rocket mass
         float fuel;                                            //Remaining fuel
         float engineEfficiency;                                // Kn thrust/liter fuel
-        float enginePower = 0;
+        public float enginePower = 0;
 
         int rotation = 0;                                      //Rotation of rocket, in degrees
-        float altitude;                                        //Distance from earths sealevel
+        double altitude;                                        //Distance from earths sealevel
         
-        public Rocket(UniverseManager _universe)
+        public Rocket()
         {
-            universe = _universe;
         }
 
 
@@ -64,20 +62,27 @@ namespace Rocket
             position = _startposition;
         }
 
-        public void Update()
+        public void Update(UniverseManager universe, float timeStep)
         {
+
+            Planet earth = universe.GetPlanet("earth");
+
+            altitude = GetDistanceFromPlanetSurface(earth);
+
             //om vi är "ovanför jordens yta", applicera gravitationskraften 
-            if (Math.Abs(universe.GetDistanceFromPlanetCore(universe.earth)) > universe.earth.radian)
+            if (GetDistanceFromPlanetSurface(earth) > 0)
             {
-                acceleration += universe.GetPlanetGravitationalPull(universe.earth);
-            } else
+                acceleration += GetPlanetGravitationalPull(earth);
+            }
+            else if(GetDistanceFromPlanetSurface(earth) < 0)
             {
                 //annars, om vi är "under", ta bort alla acceleration så vi inte sjunker igenom.
                 acceleration = Vector2.Zero;
             }
 
-            universe.ApplyEarthAirResistance(this);
-            acceleration.Y = -universe.ApplyEarthAirResistance(this);
+            acceleration.Y += ApplyAirResistance(earth);
+
+
 
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Left))
@@ -103,8 +108,8 @@ namespace Rocket
 
             //Console.WriteLine(acceleration);
             //Apply all forces every step to change position
-            position += acceleration;
-            
+            position += (acceleration * timeStep);
+            Console.WriteLine(acceleration * timeStep);
         }
 
         public void Draw(SpriteBatch spritebatch, GraphicsDevice graphics, float zoom)
@@ -118,6 +123,71 @@ namespace Rocket
             spritebatch.Begin(transformMatrix: viewMatrix);
             spritebatch.Draw(texture, position, null, Color.White, (MathHelper.ToRadians(rotation)), center, 1f, SpriteEffects.None, 0f);
             spritebatch.End();
+        }
+
+
+        public double GetDistanceFromPlanetCore(Planet planet)
+        {
+            float dx = position.X - planet.position.X;
+            float dy = position.Y - planet.position.Y;
+
+            return Math.Sqrt((dx * dx) + (dy * dy));
+        }
+
+        public double GetDistanceFromPlanetSurface(Planet planet)
+        {
+            float dx = position.X - planet.position.X;
+            float dy = position.Y - planet.position.Y;
+
+            return (Math.Sqrt((dx * dx) + (dy * dy)) - planet.radian);
+        }
+
+
+        public Vector2 GetPlanetGravitationalPull(Planet planet)
+        {
+            double G = 6.674E-11;
+            double r2 = Math.Pow(GetDistanceFromPlanetCore(planet), 2);
+            float F = (float)(G * ((mass * planet.mass) / r2));
+            //F är i newtons, därför måste vi dela den på raketens massa för att få accelerationen
+            float acceleration = (F / mass);
+
+            //detta ger oss en enhetsvector som "pekar" ner mot centret av universum(jorden)
+            Vector2 gravitationalPullDirection = Vector2.Normalize(-position);
+
+
+            return gravitationalPullDirection * acceleration;
+        }
+
+
+        public float ApplyAirResistance(Planet planet)
+        {
+            int a = area;
+            double p = planet.GetAirDensity(altitude);
+            float v = acceleration.Y;
+            float c = dragCoefficient;
+            float drag = (float)((p * c * a * (v * v)) / 2);
+
+            return drag;     //måste åtgärdas, fungerar bara i Y-led... eller?
+        }
+
+        public float GetRocketRotationRelativeToEarth()
+        {
+
+
+            float x = position.X;
+            float y = -position.Y;
+            float angle = 0;
+
+            angle = (float)(Math.Atan2(y, x) * 180 / Math.PI);
+            angle = angle % 360;
+
+            if (angle < 0)
+            {
+                angle += 360;
+            }
+
+            Console.WriteLine(angle);
+            return angle;
         }
     }
 }

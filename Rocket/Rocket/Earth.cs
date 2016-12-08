@@ -47,11 +47,18 @@ namespace Rocket
             AirDensity[20] = 5.845E-18; //1000km
         }
 
-        public double GetEarthAirDensity(double altitude)
+        public override double GetAirDensity(double altitude)
         {
+            //  Console.WriteLine(AirDensity[(int)(Math.Truncate((altitude / 50000)))] + " a:" + altitude + " " + (Math.Truncate(altitude / 50000)));   //Det blir rätt...
 
-            Console.WriteLine(AirDensity[(int)(Math.Round((altitude / 100000)))] + " a:" + altitude + " " + (Math.Round(altitude / 100000)));   //Det blir rätt...
-            return 0;
+            if (altitude < 1000000)
+            {
+                return AirDensity[(int)(Math.Truncate((altitude / 50000)))];
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }

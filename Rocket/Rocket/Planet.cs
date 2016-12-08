@@ -52,6 +52,16 @@ namespace Rocket
             vertexbuffer.SetData<VertexPositionColor>(vertices);
         }
 
+        public virtual void Update()
+        {
+
+        }
+
+        public virtual double GetAirDensity(double altitude)
+        {
+            return 0.0f;
+        }
+
         public void Draw(GraphicsDevice graphics, float zoom)
         {
             world = Matrix.CreateTranslation(0, 0, 0);
@@ -78,5 +88,7 @@ namespace Rocket
                 graphics.DrawPrimitives(PrimitiveType.TriangleList, 0, triangles);
             }
         }
+
+
     }
 }
