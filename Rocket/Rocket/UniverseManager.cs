@@ -14,7 +14,7 @@ namespace Rocket
     {
         public Rocket rocket;
         public float zoom = 1f;
-        public float timeScale = 60;
+        public float timeScale = 1;
         public Dictionary<string, Planet> planets = new Dictionary<string, Planet>();
         public double seconds;
 

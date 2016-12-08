@@ -49,7 +49,7 @@ namespace Rocket
 
         public void FireEngines()
         {
-            float power = 10 * enginePower;
+            float power = enginePower;
             acceleration += RotateDegrees(new Vector2(0, -power), rotation);
         }
 

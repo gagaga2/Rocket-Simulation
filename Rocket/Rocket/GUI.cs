@@ -36,7 +36,7 @@ namespace Rocket
             spritebatch.Begin();
 
             spritebatch.DrawString(font, "Rocket", new Vector2(graphics.Viewport.Width / 2, graphics.Viewport.Height / 2), Color.Red);
-            spritebatch.DrawString(font, (universe.rocket.GetDistanceFromPlanetSurface(universe.GetPlanet("earth")).ToString()), new Vector2(100, 100), Color.Red);
+            spritebatch.DrawString(font, ((universe.rocket.GetDistanceFromPlanetSurface(universe.GetPlanet("earth")) / 1000).ToString()), new Vector2(100, 100), Color.Red);
             spritebatch.DrawString(font, universe.seconds.ToString(), new Vector2(50, 50), Color.Red);
             spritebatch.DrawString(font, universe.rocket.enginePower.ToString(), new Vector2(50, 150), Color.Yellow);
 
