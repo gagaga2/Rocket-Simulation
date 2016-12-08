@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/max/Dropbox/C#/Gymnasie Arbete/Rocket/Rocket/Content/rocket.png</SourceFile>
-  <SourceTime>2016-12-08T22:06:40.3174634+01:00</SourceTime>
+  <SourceTime>2016-12-08T22:22:01.3597506+01:00</SourceTime>
   <DestFile>C:/Users/max/Dropbox/C#/Gymnasie Arbete/Rocket/Rocket/Content/bin/Windows/rocket.xnb</DestFile>
-  <DestTime>2016-12-08T22:06:43.7569127+01:00</DestTime>
+  <DestTime>2016-12-08T22:22:06.4328739+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T08:36:08+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
