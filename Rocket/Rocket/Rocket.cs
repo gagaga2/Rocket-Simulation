@@ -22,17 +22,18 @@ namespace Rocket
 
         public int area { get; }                               //Used for Air Resistance calculations
         public float dragCoefficient = 1.5f;                          //based on rocket "shape"
-        public float mass = 10000;                             //Total mass of rocket
+        public float mass = 130000;                             //Total mass of rocket in KG
         float fuelCapacity;                                    //should be 85% of rocket mass
         float fuel;                                            //Remaining fuel
         float engineEfficiency;                                // Kn thrust/liter fuel
         public float enginePower = 0;
 
-        int rotation = 0;                                      //Rotation of rocket, in degrees
+        public int rotation = 0;                                      //Rotation of rocket, in degrees
         double altitude;                                        //Distance from earths sealevel
         
         public Rocket()
         {
+
         }
 
 
@@ -170,10 +171,14 @@ namespace Rocket
             return drag;     //måste åtgärdas, fungerar bara i Y-led... eller?
         }
 
+        public float GetRocketAccelerationDirection()
+        {
+            float rocketAccelerationDirection = (float)(Math.Atan2(-acceleration.Y, -acceleration.X) % MathHelper.TwoPi);
+            return (rocketAccelerationDirection - MathHelper.PiOver2);
+        }
+
         public float GetRocketRotationRelativeToEarth()
         {
-
-
             float x = position.X;
             float y = -position.Y;
             float angle = 0;

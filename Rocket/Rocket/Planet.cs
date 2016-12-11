@@ -44,7 +44,7 @@ namespace Rocket
                 float angleSecondSide = (angle + (angle * (i + 1)));
 
                 vertices[i] = new VertexPositionColor(position, innerColor);
-                vertices[i + 1] = new VertexPositionColor(position + new Vector3((float) (radian * Math.Sin(angleFirstSide)), (float) (radian * Math.Cos(angleFirstSide)), 0), outerColor); //beter sig konstigt
+                vertices[i + 1] = new VertexPositionColor(position + new Vector3((float) (radian * Math.Sin(angleFirstSide)), (float) (radian * Math.Cos(angleFirstSide)), 0), outerColor);
                 vertices[i + 2] = new VertexPositionColor(position + new Vector3((float) (radian * Math.Sin(angleSecondSide)), (float) (radian * Math.Cos(angleSecondSide)), 0), outerColor);
             }
 

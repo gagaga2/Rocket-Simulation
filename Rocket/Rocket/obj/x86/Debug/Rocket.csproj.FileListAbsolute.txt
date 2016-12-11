@@ -52,8 +52,6 @@ C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x8
 C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.XInput.xml
 C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.RawInput.xml
 C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
-C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Earth.fbx
-C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Earth.xnb
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\rocket.xnb
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Rocket.exe
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Rocket.pdb
@@ -81,3 +79,12 @@ C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\obj\x86\Debug\Rocket.cspro
 C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\basicFont.xnb
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\basicFont.xnb
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\rocket.png
+C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\rocket.png
+C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Compass.xnb
+C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Compass.png
+C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Arrow.xnb
+C:\Users\max.gabrielsson\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Arrow.png
+C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Arrow.xnb
+C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Compass.xnb
+C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Arrow.png
+C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Compass.png

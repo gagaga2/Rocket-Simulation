@@ -55,6 +55,19 @@ namespace Rocket
             {
                 zoom *= 1.1f;
             }
+
+            if (state.IsKeyDown(Keys.A))
+            {
+                //kommer aldrig bli mindre än 0, vilket är bra
+                timeScale -= 1f;
+                timeScale = MathHelper.Clamp(timeScale, 1f, 10f);
+            }
+            if (state.IsKeyDown(Keys.S))
+            {
+                timeScale += 1f;
+                timeScale = MathHelper.Clamp(timeScale, 1f, 10f);
+            }
+
         }
 
         public void Draw(SpriteBatch spritebatch, GraphicsDevice graphics)

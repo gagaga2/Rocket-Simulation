@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Rocket")]
-[assembly: AssemblyProduct("Rocket")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyTitle("RocketBuilder")]
 [assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("RocketBuilder")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e7df4ff7-9aac-499e-bc12-76fdc702c438")]
+[assembly: Guid("4c7bab42-99a1-4faa-a972-127493970382")]
 
 // Version information for an assembly consists of the following four values:
 //

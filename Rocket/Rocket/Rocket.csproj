@@ -41,6 +41,7 @@
     <Compile Include="Earth.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GUI.cs" />
+    <Compile Include="Launchpad.cs" />
     <Compile Include="Moon.cs" />
     <Compile Include="Planet.cs" />
     <Compile Include="Program.cs" />
@@ -56,6 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Compass.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\rocket.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
