@@ -15,12 +15,13 @@ namespace Rocket
         SpriteBatch spriteBatch;
         UniverseManager universe;
         GUI gui;
+        string[] args;
 
-        public Game1()
+        public Game1(string[] args)
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
+            this.args = args;
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace Rocket
         {
             // TODO: Add your initialization logic here
 
-            universe = new UniverseManager();
+            universe = new UniverseManager(args);
             gui = new GUI();
 
             base.Initialize();

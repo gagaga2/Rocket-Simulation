@@ -20,7 +20,7 @@ namespace Rocket
         public Vector2 position = new Vector2(0, 0);           //this holds the rockets position
         public Vector2 center = new Vector2(0, 0);
 
-        public int area { get; }                               //Used for Air Resistance calculations
+        public int area = 500;                                  //Used for Air Resistance calculations
         public float dragCoefficient = 1.5f;                          //based on rocket "shape"
         public float mass = 130000;                             //Total mass of rocket in KG
         float fuelCapacity;                                    //should be 85% of rocket mass
@@ -33,7 +33,7 @@ namespace Rocket
         
         public Rocket()
         {
-
+            // int rocketPosition, double altitude, double fuel, double mass, double efficency, double area
         }
 
 
@@ -81,10 +81,7 @@ namespace Rocket
                 acceleration = Vector2.Zero;
             }
 
-            acceleration.Y += ApplyAirResistance(earth);
-
-
-
+           
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Left))
             {
@@ -107,10 +104,14 @@ namespace Rocket
                 FireEngines();
             }
 
-            //Console.WriteLine(acceleration);
+
+            //plocka isär floaten till komposanter...?
+            //Do
+
+            acceleration -= GetDragVector(earth);
+            Console.WriteLine(acceleration);
             //Apply all forces every step to change position
             position += (acceleration * timeStep);
-            Console.WriteLine(acceleration * timeStep);
         }
 
         public void Draw(SpriteBatch spritebatch, GraphicsDevice graphics, float zoom)
@@ -155,20 +156,39 @@ namespace Rocket
             //detta ger oss en enhetsvector som "pekar" ner mot centret av universum(jorden)
             Vector2 gravitationalPullDirection = Vector2.Normalize(-position);
 
-
             return gravitationalPullDirection * acceleration;
         }
 
 
-        public float ApplyAirResistance(Planet planet)
+        public Vector2 GetDragVector(Planet planet)
         {
             int a = area;
             double p = planet.GetAirDensity(altitude);
-            float v = acceleration.Y;
+            float v = acceleration.Length();
             float c = dragCoefficient;
             float drag = (float)((p * c * a * (v * v)) / 2);
+            //eftersom luftmotståndsekvationen ger oss newtons
+            //måste vi dela med massan för att få accelerationen som verkar.
+            float dragAcceleration = drag / mass;
 
-            return drag;     //måste åtgärdas, fungerar bara i Y-led... eller?
+            if (acceleration.Length() != 0)
+            {
+                //skapa ny vector med accelerationsriktningen
+                Vector2 dragVector = acceleration;
+                dragVector.Normalize();
+                
+                //förläng med vårt luftmotstånd
+                dragVector *= (dragAcceleration);
+                return dragVector;
+
+                //rimligt? http://io9.gizmodo.com/5893615/absolutely-mindblowing-video-shot-from-the-space-shuttle-during-launch
+
+
+            }
+            else
+            {
+                return Vector2.Zero;
+            }
         }
 
         public float GetRocketAccelerationDirection()

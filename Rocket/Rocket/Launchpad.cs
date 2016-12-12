@@ -15,11 +15,10 @@ namespace Rocket
         Vector2 position;
         Texture2D texture;
         Vector2 textureCenter;
-        UniverseManager universe;
 
-        public Launchpad(UniverseManager universe)
+        public Launchpad()
         {
-            this.universe = universe;
+
         }
 
         public void Load(Texture2D texture)

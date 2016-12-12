@@ -13,14 +13,16 @@ namespace Rocket
     class UniverseManager
     {
         public Rocket rocket;
+        public Launchpad launchpad;
         public float zoom = 1f;
         public float timeScale = 1;
         public Dictionary<string, Planet> planets = new Dictionary<string, Planet>();
         public double seconds;
 
 
-        public UniverseManager()
+        public UniverseManager(string[] args)
         {
+            launchpad = new Launchpad();
             rocket = new Rocket();
             planets.Add("earth", new Earth(this));
             planets.Add("moon", new Moon(this));

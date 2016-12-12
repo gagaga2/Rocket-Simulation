@@ -53,7 +53,7 @@ namespace Rocket
 
             if (altitude < 1000000)
             {
-                return AirDensity[(int)(Math.Truncate((altitude / 50000)))];
+                return AirDensity[(int)(Math.Truncate(Math.Abs((altitude / 50000))))];
             }
             else
             {
