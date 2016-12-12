@@ -131,7 +131,7 @@ namespace RocketBuilder
             }
             else
             {
-                Console.WriteLine(rocketexePath + " error");
+                Console.WriteLine(args);
                 //starta rocket.exe med parametrarna
                 var proc = System.Diagnostics.Process.Start(rocketexePath, args);
             }

@@ -88,3 +88,5 @@ C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Cont
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Compass.xnb
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Arrow.png
 C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\Compass.png
+C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\base.xnb
+C:\Users\max\Dropbox\C#\Gymnasie Arbete\Rocket\Rocket\bin\Windows\x86\Debug\Content\base.png

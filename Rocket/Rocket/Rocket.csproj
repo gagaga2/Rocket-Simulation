@@ -60,6 +60,9 @@
     <Content Include="Content\Arrow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\base.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Compass.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -49,7 +49,8 @@ namespace Rocket
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
-            universe.rocket.Load(Content.Load<Texture2D>("rocket"), new Vector2(0, -6371200)); //6371200 meter radie på jorden. //-384400000 till månen 
+            universe.rocket.Load(Content.Load<Texture2D>("rocket"));
+            universe.launchpad.Load(Content.Load<Texture2D>("base"));
 
             foreach(KeyValuePair<string, Planet> p in universe.GetPlanets())
             {

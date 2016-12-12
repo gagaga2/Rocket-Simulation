@@ -48,7 +48,7 @@ namespace Rocket
                 spritebatch.Draw(arrow, viewCenter, null, Color.Red, rocket.GetRocketAccelerationDirection(), (new Vector2(arrow.Width / 2, arrow.Height + 30)), 1f, SpriteEffects.None, 1);
             }
 
-            spritebatch.Draw(compass, viewCenter, null, Color.Gray, MathHelper.ToRadians(rocket.rotation), (new Vector2(compass.Width / 2, compass.Height / 2)), 1f, SpriteEffects.None, 1);
+            spritebatch.Draw(compass, viewCenter, null, Color.Gray, rocket.rotation, (new Vector2(compass.Width / 2, compass.Height / 2)), 1f, SpriteEffects.None, 1);
 
             //statisk text
             //spritebatch.DrawString(font, "Rocket", new Vector2(graphics.Viewport.Width / 2, graphics.Viewport.Height / 2), Color.Red);

@@ -19,13 +19,29 @@ namespace Rocket
         public Dictionary<string, Planet> planets = new Dictionary<string, Planet>();
         public double seconds;
 
-
         public UniverseManager(string[] args)
         {
-            launchpad = new Launchpad();
-            rocket = new Rocket();
+            float PositionRadians = -MathHelper.ToRadians(int.Parse(args[0]));
+            float rocketRadians = (float)(PositionRadians + MathHelper.PiOver2);
+            double rocketAltitude = double.Parse(args[1]);
+            double rocketFuel = double.Parse(args[2]);
+            double rocketMass = double.Parse(args[3]);
+            double rocketEfficency = double.Parse(args[4]);
+            double rocketArea = double.Parse(args[5]);
+
             planets.Add("earth", new Earth(this));
             planets.Add("moon", new Moon(this));
+
+            float rocketPositionHeight = (float) (GetPlanet("earth").radian + rocketAltitude);
+            Vector2 rocketPosition = new Vector2();
+            rocketPosition.X = (float) Math.Cos(PositionRadians);
+            rocketPosition.Y = (float) Math.Sin(PositionRadians);
+            rocketPosition *= rocketPositionHeight;
+
+
+            Console.WriteLine(rocketPosition);
+            launchpad = new Launchpad(rocketPosition, rocketRadians, this);
+            rocket = new Rocket(rocketPosition, rocketArea, rocketMass, rocketFuel, rocketEfficency, rocketRadians);
         }
 
         public Dictionary<string, Planet> GetPlanets()
@@ -80,7 +96,9 @@ namespace Rocket
             {
                 p.Value.Draw(graphics, zoom);
             }
+            launchpad.Draw(spritebatch, graphics, zoom);
             rocket.Draw(spritebatch, graphics, zoom);
+            
 
             //rita värden av funktioner som text på skärmen
         }
