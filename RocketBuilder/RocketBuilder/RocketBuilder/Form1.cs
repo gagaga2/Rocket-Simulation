@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,6 +90,7 @@ namespace RocketBuilder
         private void tbxEfficiency_ValueChanged(object sender, EventArgs e)
         {
             rocketEfficency = decimal.ToDouble(tbxEfficiency.Value);
+            //https://en.wikipedia.org/wiki/Specific_impulse ??
         }
 
         private void tbxFuel_ValueChanged(object sender, EventArgs e)
@@ -100,8 +102,39 @@ namespace RocketBuilder
 
         private void btnLaunch_Click(object sender, EventArgs e)
         {
-            //https://en.wikipedia.org/wiki/Specific_impulse
 
+            //area av en kon.
+            double area = Math.PI * (rocketBaseWidth / 2) * ((rocketBaseWidth / 2) + Math.Sqrt(Math.Pow(rocketHeight, 2) + Math.Pow((rocketBaseWidth / 2), 2)));
+
+            //gör en parameter-string med alla värden som ska skickas med till Rocket.exe
+            string args = " " + RocketPosition.ToString() +
+                          " " + altitude.ToString() +
+                          " " + fuel.ToString() +
+                          " " + mass.ToString() +
+                          " " + rocketEfficency.ToString() +
+                          " " + area.ToString();
+
+
+            //Gå till den högsta mappen och hitta sedan vägen till rocket.exe
+            string currentDir = Environment.CurrentDirectory.ToString();
+            currentDir = Directory.GetParent(currentDir).FullName;
+            currentDir = Directory.GetParent(currentDir).FullName;
+            currentDir = Directory.GetParent(currentDir).FullName;
+            currentDir = Directory.GetParent(currentDir).FullName;
+            currentDir = Directory.GetParent(currentDir).FullName;
+
+            string rocketexePath = Directory.GetFiles(currentDir, "rocket.exe", SearchOption.AllDirectories).FirstOrDefault();
+            
+            if(rocketexePath == null)
+            {
+                Console.WriteLine("Kan inte hitta rocket");
+            }
+            else
+            {
+                Console.WriteLine(rocketexePath + " error");
+                //starta rocket.exe med parametrarna
+                var proc = System.Diagnostics.Process.Start(rocketexePath, args);
+            }
         }
     }
 }

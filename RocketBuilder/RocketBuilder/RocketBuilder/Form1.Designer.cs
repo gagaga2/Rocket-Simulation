@@ -212,9 +212,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(217, 427);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(46, 13);
+            this.label8.Size = new System.Drawing.Size(41, 13);
             this.label8.TabIndex = 29;
-            this.label8.Text = "Kn/liters";
+            this.label8.Text = "Kn/liter";
             // 
             // tbxPosition
             // 
@@ -261,6 +261,11 @@
             this.tbxHeight.Name = "tbxHeight";
             this.tbxHeight.Size = new System.Drawing.Size(100, 20);
             this.tbxHeight.TabIndex = 34;
+            this.tbxHeight.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
             this.tbxHeight.ValueChanged += new System.EventHandler(this.tbxHeight_ValueChanged);
             // 
             // tbxWidth
@@ -274,6 +279,11 @@
             this.tbxWidth.Name = "tbxWidth";
             this.tbxWidth.Size = new System.Drawing.Size(100, 20);
             this.tbxWidth.TabIndex = 35;
+            this.tbxWidth.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.tbxWidth.ValueChanged += new System.EventHandler(this.tbxWidth_ValueChanged);
             // 
             // tbxEfficiency
@@ -287,6 +297,11 @@
             this.tbxEfficiency.Name = "tbxEfficiency";
             this.tbxEfficiency.Size = new System.Drawing.Size(100, 20);
             this.tbxEfficiency.TabIndex = 36;
+            this.tbxEfficiency.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.tbxEfficiency.ValueChanged += new System.EventHandler(this.tbxEfficiency_ValueChanged);
             // 
             // Form1
