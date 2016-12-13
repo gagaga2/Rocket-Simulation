@@ -51,6 +51,9 @@
             this.tbxHeight = new System.Windows.Forms.NumericUpDown();
             this.tbxWidth = new System.Windows.Forms.NumericUpDown();
             this.tbxEfficiency = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.trbPosition)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbxPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbxPosition)).BeginInit();
@@ -59,6 +62,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbxHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbxWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbxEfficiency)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblLaunchDegree
@@ -167,9 +171,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(217, 276);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 13);
+            this.label3.Size = new System.Drawing.Size(68, 13);
             this.label3.TabIndex = 24;
-            this.label3.Text = "Meters O.S.L.";
+            this.label3.Text = "Meters A.S.L";
             // 
             // label4
             // 
@@ -232,6 +236,11 @@
             // tbxAltitude
             // 
             this.tbxAltitude.Location = new System.Drawing.Point(111, 274);
+            this.tbxAltitude.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.tbxAltitude.Name = "tbxAltitude";
             this.tbxAltitude.Size = new System.Drawing.Size(100, 20);
             this.tbxAltitude.TabIndex = 32;
@@ -245,9 +254,19 @@
             0,
             0,
             0});
+            this.tbxFuel.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.tbxFuel.Name = "tbxFuel";
             this.tbxFuel.Size = new System.Drawing.Size(100, 20);
             this.tbxFuel.TabIndex = 33;
+            this.tbxFuel.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.tbxFuel.ValueChanged += new System.EventHandler(this.tbxFuel_ValueChanged);
             // 
             // tbxHeight
@@ -255,6 +274,11 @@
             this.tbxHeight.Location = new System.Drawing.Point(111, 374);
             this.tbxHeight.Maximum = new decimal(new int[] {
             1000,
+            0,
+            0,
+            0});
+            this.tbxHeight.Minimum = new decimal(new int[] {
+            2,
             0,
             0,
             0});
@@ -276,6 +300,11 @@
             0,
             0,
             0});
+            this.tbxWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.tbxWidth.Name = "tbxWidth";
             this.tbxWidth.Size = new System.Drawing.Size(100, 20);
             this.tbxWidth.TabIndex = 35;
@@ -294,21 +323,65 @@
             0,
             0,
             0});
+            this.tbxEfficiency.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.tbxEfficiency.Name = "tbxEfficiency";
             this.tbxEfficiency.Size = new System.Drawing.Size(100, 20);
             this.tbxEfficiency.TabIndex = 36;
             this.tbxEfficiency.Value = new decimal(new int[] {
-            5,
+            10,
             0,
             0,
             0});
             this.tbxEfficiency.ValueChanged += new System.EventHandler(this.tbxEfficiency_ValueChanged);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(111, 451);
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(100, 20);
+            this.numericUpDown1.TabIndex = 37;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 453);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(96, 13);
+            this.label9.TabIndex = 38;
+            this.label9.Text = "Engine Max Power";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(217, 453);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(20, 13);
+            this.label10.TabIndex = 39;
+            this.label10.Text = "Kn";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(294, 599);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.tbxEfficiency);
             this.Controls.Add(this.tbxWidth);
             this.Controls.Add(this.tbxHeight);
@@ -343,6 +416,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbxHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbxWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbxEfficiency)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -372,6 +446,9 @@
         private System.Windows.Forms.NumericUpDown tbxHeight;
         private System.Windows.Forms.NumericUpDown tbxWidth;
         private System.Windows.Forms.NumericUpDown tbxEfficiency;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
     }
 }
 

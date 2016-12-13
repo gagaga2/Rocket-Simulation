@@ -14,7 +14,7 @@ namespace Rocket
         {
             this.universe = universe;
 
-            innerColor = Color.Black;
+            innerColor = Color.DimGray;
             outerColor = Color.Gray;
             mass = 7.34767309E+22;
             radian = 1739337; //Meters 1739337

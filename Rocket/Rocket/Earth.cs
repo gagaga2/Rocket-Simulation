@@ -26,7 +26,7 @@ namespace Rocket
         {
             //  Console.WriteLine(AirDensity[(int)(Math.Truncate((altitude / 50000)))] + " a:" + altitude + " " + (Math.Truncate(altitude / 50000)));   //Det blir rätt...
 
-            if (altitude < 20000 && altitude > 1)
+            if (altitude < 40000 && altitude > 1) //bör bara gå realistiskt till 20000, inte 40000
             {
 
                 double h = altitude;    //Altituden över havsytan

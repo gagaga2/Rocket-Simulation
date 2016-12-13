@@ -20,7 +20,7 @@ namespace RocketBuilder
         double rocketBaseWidth;
         double rocketHeight;
         double rocketEfficency;
-
+        float rocketMaxPower;
 
         public Form1()
         {
@@ -106,13 +106,17 @@ namespace RocketBuilder
             //Arean av basen av konen.
             double referenceArea = Math.PI * Math.Pow((rocketBaseWidth / 2), 2);
 
+            //dubbelsäkra
+            mass = Math.Round(fuel * 1.15);
+
             //gör en parameter-string med alla värden som ska skickas med till Rocket.exe
             string args = " " + RocketPosition.ToString() +
                           " " + altitude.ToString() +
                           " " + fuel.ToString() +
                           " " + mass.ToString() +
                           " " + rocketEfficency.ToString() +
-                          " " + referenceArea.ToString();
+                          " " + referenceArea.ToString() +
+                          " " + rocketMaxPower.ToString();
 
 
             //Gå till den högsta mappen och hitta sedan vägen till rocket.exe
@@ -135,6 +139,11 @@ namespace RocketBuilder
                 //starta rocket.exe med parametrarna
                 var proc = System.Diagnostics.Process.Start(rocketexePath, args);
             }
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

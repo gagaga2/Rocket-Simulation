@@ -25,7 +25,7 @@ namespace Rocket
         public double fuelCapacity;                                     //should be 85% of rocket mass
         public double fuel;                                             //Remaining fuel
         double engineEfficiency;                                 //Kn thrust/liter fuel
-        public float enginePower;
+        public float enginePower = 0;
         public float engineMaxPower;
         bool leftPlatform = false;
 
@@ -97,13 +97,13 @@ namespace Rocket
             }
             if (state.IsKeyDown(Keys.Down))
             {
-                enginePower -= 0.1f;
-                enginePower = MathHelper.Clamp(enginePower, 0, 10);
+                enginePower -= (engineMaxPower / 100);
+                enginePower = MathHelper.Clamp(enginePower, 0, engineMaxPower);
             }
             if (state.IsKeyDown(Keys.Up))
             {
-                enginePower += 0.1f;
-                enginePower = MathHelper.Clamp(enginePower, 0, 10);
+                enginePower += (engineMaxPower / 100);
+                enginePower = MathHelper.Clamp(enginePower, 0, engineMaxPower);
             }
 
 
@@ -216,10 +216,11 @@ namespace Rocket
 
         public void FireEngines()
         {
-            if ((fuel - engineEfficiency * enginePower) > 0)
+            if ((fuel - (enginePower / engineEfficiency)) > 0)
             {
-                fuel -= engineEfficiency * engineMaxPower * enginePower;
-                float engineAcceleration = engineMaxPower * enginePower;
+                mass -= (engineMaxPower * enginePower / engineEfficiency);
+                fuel -= (engineMaxPower * enginePower / engineEfficiency);
+                float engineAcceleration = engineMaxPower * enginePower * 1000 / (float)mass;
                 Console.WriteLine(engineAcceleration);
                 acceleration += RotateVector(new Vector2(0, -engineAcceleration), rotation);
             }

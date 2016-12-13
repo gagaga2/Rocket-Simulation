@@ -30,6 +30,7 @@ namespace Rocket
             double rocketArea = double.Parse(args[5]);
             float engineMaxPower = float.Parse(args[6]);
 
+            planets.Add("earthAtmosphere", new Atmosphere(this, 0, 6411200, Color.SkyBlue, Color.Yellow));
             planets.Add("earth", new Earth(this));
             planets.Add("moon", new Moon(this));
 
