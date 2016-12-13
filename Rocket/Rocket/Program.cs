@@ -18,10 +18,10 @@ namespace Rocket
             string[] args = new string[6];
             args[0] = "90";
             args[1] = "0";
-            args[2] = "1000";
-            args[3] = "1150";
-            args[4] = "0";
-            args[5] = "0";
+            args[2] = "10000";
+            args[3] = "11500";
+            args[4] = "1";
+            args[5] = "4";
            
             using (var game = new Game1(args))
                 game.Run();

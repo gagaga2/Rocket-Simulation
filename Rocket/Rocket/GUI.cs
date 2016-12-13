@@ -15,19 +15,20 @@ namespace Rocket
         Texture2D compass;
         Texture2D arrow;
         Texture2D altimeter;
-
+        Texture2D menu;
         public GUI()
         {
 
         }
 
-        public void Load(SpriteFont font, UniverseManager universe, Texture2D compass, Texture2D arrow, Texture2D altimeter)
+        public void Load(SpriteFont font, UniverseManager universe, Texture2D compass, Texture2D arrow, Texture2D altimeter, Texture2D menu)
         {
             this.universe = universe;
             this.font = font;
             this.compass = compass;
             this.arrow = arrow;
             this.altimeter = altimeter;
+            this.menu = menu;
         }
 
         public void Draw(SpriteBatch spritebatch, GraphicsDevice graphics)
@@ -61,8 +62,16 @@ namespace Rocket
             spritebatch.Draw(compass, viewCenter, null, Color.Gray, rocket.rotation, (new Vector2(compass.Width / 2, compass.Height / 2)), 1f, SpriteEffects.None, 1);
             //rita altimeter
             spritebatch.Draw(altimeter, new Vector2(viewCenter.X, graphics.Viewport.Height - 20), null, Color.White, 0, (new Vector2(altimeter.Width / 2, altimeter.Height / 2)), 1f, SpriteEffects.None, 1);
+            spritebatch.DrawString(font, (Math.Truncate(rocket.GetDistanceFromPlanetSurface(earth)).ToString() + " M.A.S.L."), new Vector2(graphics.Viewport.Width/2 - 90, graphics.Viewport.Height - 30), Color.White);
 
-            
+            //rita meny
+            Vector2 menuLocation = new Vector2(graphics.Viewport.Width - 150, graphics.Viewport.Height - 195);
+            spritebatch.Draw(menu, menuLocation, Color.White);
+            spritebatch.DrawString(font, rocket.GetDragVector(earth).Length().ToString() + " m/s2", new Vector2(menuLocation.X + 10, menuLocation.Y + 25), Color.White);
+            spritebatch.DrawString(font, rocket.acceleration.Length().ToString() + " m/s" , new Vector2(menuLocation.X + 10, menuLocation.Y + 70), Color.White);
+            spritebatch.DrawString(font, rocket.GetPlanetGravitationalPull(moon).Length().ToString() + " m/s2", new Vector2(menuLocation.X + 10, menuLocation.Y + 115), Color.White);
+            spritebatch.DrawString(font, rocket.GetPlanetGravitationalPull(earth).Length().ToString() + " m/s2" , new Vector2(menuLocation.X + 10, menuLocation.Y + 160), Color.White);
+
             //statisk text
             spritebatch.DrawString(font, universe.seconds.ToString(), new Vector2(50, 50), Color.Red);
             spritebatch.DrawString(font, rocket.acceleration.Length().ToString(), new Vector2(50, 150), Color.Yellow);
