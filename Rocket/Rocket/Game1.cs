@@ -62,7 +62,8 @@ namespace Rocket
                     universe, Content.Load<Texture2D>("compass"),
                     Content.Load<Texture2D>("arrow"),
                     Content.Load<Texture2D>("altimeter"),
-                    Content.Load<Texture2D>("menu")
+                    Content.Load<Texture2D>("menu"),
+                    Content.Load<Texture2D>("fuel")
                     );
         }
 

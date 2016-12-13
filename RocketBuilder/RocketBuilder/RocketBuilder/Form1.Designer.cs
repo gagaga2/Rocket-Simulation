@@ -97,6 +97,7 @@
             this.pbxPreview.Size = new System.Drawing.Size(270, 180);
             this.pbxPreview.TabIndex = 8;
             this.pbxPreview.TabStop = false;
+            this.pbxPreview.Click += new System.EventHandler(this.pbxPreview_Click);
             // 
             // lblMass
             // 

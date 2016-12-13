@@ -28,6 +28,7 @@ namespace Rocket
             double rocketMass = double.Parse(args[3]);
             double rocketEfficency = double.Parse(args[4]);
             double rocketArea = double.Parse(args[5]);
+            float engineMaxPower = float.Parse(args[6]);
 
             planets.Add("earth", new Earth(this));
             planets.Add("moon", new Moon(this));
@@ -41,7 +42,7 @@ namespace Rocket
 
             Console.WriteLine(rocketPosition);
             launchpad = new Launchpad(rocketPosition, rocketRadians, this);
-            rocket = new Rocket(rocketPosition, rocketArea, rocketMass, rocketFuel, rocketEfficency, rocketRadians);
+            rocket = new Rocket(rocketPosition, rocketArea, rocketMass, rocketFuel, rocketEfficency, rocketRadians, engineMaxPower);
         }
 
         public Dictionary<string, Planet> GetPlanets()
@@ -53,7 +54,6 @@ namespace Rocket
         {
             return planets[planet];
         }
-
 
 
         public void Update(float timeStep)
@@ -96,10 +96,10 @@ namespace Rocket
             {
                 p.Value.Draw(graphics, zoom);
             }
+
             launchpad.Draw(spritebatch, graphics, zoom);
             rocket.Draw(spritebatch, graphics, zoom);
             
-
             //rita värden av funktioner som text på skärmen
         }
     }

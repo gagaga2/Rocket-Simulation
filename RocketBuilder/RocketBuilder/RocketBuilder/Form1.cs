@@ -103,8 +103,8 @@ namespace RocketBuilder
         private void btnLaunch_Click(object sender, EventArgs e)
         {
 
-            //area av en kon.
-            double area = Math.PI * (rocketBaseWidth / 2) * ((rocketBaseWidth / 2) + Math.Sqrt(Math.Pow(rocketHeight, 2) + Math.Pow((rocketBaseWidth / 2), 2)));
+            //Arean av basen av konen.
+            double referenceArea = Math.PI * Math.Pow((rocketBaseWidth / 2), 2);
 
             //gör en parameter-string med alla värden som ska skickas med till Rocket.exe
             string args = " " + RocketPosition.ToString() +
@@ -112,7 +112,7 @@ namespace RocketBuilder
                           " " + fuel.ToString() +
                           " " + mass.ToString() +
                           " " + rocketEfficency.ToString() +
-                          " " + area.ToString();
+                          " " + referenceArea.ToString();
 
 
             //Gå till den högsta mappen och hitta sedan vägen till rocket.exe

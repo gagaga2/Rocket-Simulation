@@ -20,24 +20,28 @@ namespace Rocket
         public Vector2 center = new Vector2(0, 0);              //center of rocket
 
         public double area = 1;                                //Used for Air Resistance calculations
-        public float dragCoefficient = 1.5f;                    //based on rocket "shape"
+        public float dragCoefficient = 0.75f;                    //based on rocket "shape" https://spaceflightsystems.grc.nasa.gov/education/rocket/shaped.html
         public double mass = 1;                             //Total mass of rocket in KG
-        double fuelCapacity;                                     //should be 85% of rocket mass
-        double fuel;                                             //Remaining fuel
+        public double fuelCapacity;                                     //should be 85% of rocket mass
+        public double fuel;                                             //Remaining fuel
         double engineEfficiency;                                 //Kn thrust/liter fuel
-        public float enginePower = 0;
+        public float enginePower;
+        public float engineMaxPower;
+        bool leftPlatform = false;
 
         public float rotation;                                  //Rotation of rocket, in radians
         double altitude;                                        //Distance from earths sealevel
         
-        public Rocket(Vector2 startPosition, double area, double mass, double fuel, double engineEfficiency, float rotation)
+        public Rocket(Vector2 startPosition, double area, double mass, double fuel, double engineEfficiency, float rotation, float engineMaxPower)
         {
             this.position = startPosition;
             this.area = area;
             this.mass = mass;
             this.fuelCapacity = fuel;
+            this.fuel = fuel;
             this.engineEfficiency = engineEfficiency;
             this.rotation = rotation;
+            this.engineMaxPower = engineMaxPower;
 
         }
 
@@ -55,11 +59,13 @@ namespace Rocket
             Planet moon = universe.GetPlanet("moon");
             altitude = GetDistanceFromPlanetSurface(earth);
 
-
-            Console.WriteLine(GetPlanetGravitationalPull(moon));
+            if (enginePower != 0)
+            {
+                leftPlatform = true;
+            }
 
             //om vi är "ovanför jordens yta", applicera gravitationskraften 
-            if (GetDistanceFromPlanetSurface(earth) > 0)
+            if (GetDistanceFromPlanetSurface(earth) > 0 && leftPlatform)
             {
                 acceleration += GetPlanetGravitationalPull(earth);
             }
@@ -92,20 +98,21 @@ namespace Rocket
             if (state.IsKeyDown(Keys.Down))
             {
                 enginePower -= 0.1f;
+                enginePower = MathHelper.Clamp(enginePower, 0, 10);
             }
             if (state.IsKeyDown(Keys.Up))
             {
                 enginePower += 0.1f;
+                enginePower = MathHelper.Clamp(enginePower, 0, 10);
             }
-            if (state.IsKeyDown(Keys.Space))
-            {
-                FireEngines();
-            }
+
 
             //plocka isär floaten till komposanter...?
             //Do
 
-            acceleration -= GetDragVector(earth);
+            acceleration -= GetDragAccelerationVector(earth);
+
+            FireEngines();
             //Console.WriteLine(acceleration);
             //Apply all forces every step to change position
             position += (acceleration * timeStep);
@@ -158,13 +165,13 @@ namespace Rocket
         }
 
 
-        public Vector2 GetDragVector(Planet planet)
+        public Vector2 GetDragAccelerationVector(Planet planet)
         {
             double a = area;
             double p = planet.GetAirDensity(altitude);
             float v = acceleration.Length();
             float c = dragCoefficient;
-            float drag = (float)((p * c * a * (v * v)) / 2);
+            float drag = (float)(c * a * p * Math.Pow(Math.Abs(v), 2) * 0.5);
             //eftersom luftmotståndsekvationen ger oss newtons
             //måste vi dela med massan för att få accelerationen som verkar.
             double dragAcceleration = drag / mass;
@@ -175,6 +182,8 @@ namespace Rocket
                 Vector2 dragVector = acceleration;
                 dragVector.Normalize();
                 
+                
+
                 //förläng med vårt luftmotstånd
                 dragVector *= (float)(dragAcceleration);
                 return dragVector;
@@ -207,9 +216,20 @@ namespace Rocket
 
         public void FireEngines()
         {
-            float power = enginePower;
-            acceleration += RotateVector(new Vector2(0, -power), rotation);
+            if ((fuel - engineEfficiency * enginePower) > 0)
+            {
+                fuel -= engineEfficiency * engineMaxPower * enginePower;
+                float engineAcceleration = engineMaxPower * enginePower;
+                Console.WriteLine(engineAcceleration);
+                acceleration += RotateVector(new Vector2(0, -engineAcceleration), rotation);
+            }
+            else
+            {
+                Console.WriteLine("out of fuel!");
+            }
         }
+
+
 
         public float GetRocketRotationRelativeToEarth()
         {
