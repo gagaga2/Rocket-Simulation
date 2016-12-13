@@ -42,24 +42,6 @@ namespace Rocket
         }
 
 
-        public Vector2 RotateVector(Vector2 v, float radians)
-        {
-            double cos = Math.Cos(radians);
-            double sin = Math.Sin(radians);
-
-            float rX = (float) ((v.X * cos) - (v.Y * sin));
-            float rY = (float) ((v.X * sin) + (v.Y * cos));
-
-            return new Vector2(rX, rY);
-        }
-
-        public void FireEngines()
-        {
-            float power = enginePower;
-            acceleration += RotateVector(new Vector2(0, -power), rotation);
-        }
-
-
         public void Load(Texture2D texture)
         {
             this.texture = texture;
@@ -70,7 +52,11 @@ namespace Rocket
         public void Update(UniverseManager universe, float timeStep)
         {
             Planet earth = universe.GetPlanet("earth");
+            Planet moon = universe.GetPlanet("moon");
             altitude = GetDistanceFromPlanetSurface(earth);
+
+
+            Console.WriteLine(GetPlanetGravitationalPull(moon));
 
             //om vi är "ovanför jordens yta", applicera gravitationskraften 
             if (GetDistanceFromPlanetSurface(earth) > 0)
@@ -80,6 +66,16 @@ namespace Rocket
             else if(GetDistanceFromPlanetSurface(earth) < 0)
             {
                 //annars, om vi är "under", ta bort alla acceleration så vi inte sjunker igenom.
+                acceleration = Vector2.Zero;
+            }
+
+            //checka om vi kolliderar med månen och sluta accelerera då
+            if (GetDistanceFromPlanetSurface(moon) > 0)
+            {
+                acceleration += GetPlanetGravitationalPull(moon);
+            }
+            else if (GetDistanceFromPlanetSurface(moon) < 0)
+            {
                 acceleration = Vector2.Zero;
             }
 
@@ -132,7 +128,7 @@ namespace Rocket
         public double GetDistanceFromPlanetCore(Planet planet)
         {
             float dx = position.X - planet.position.X;
-            float dy = position.Y - planet.position.Y;
+            float dy = -position.Y - planet.position.Y;
 
             return Math.Sqrt((dx * dx) + (dy * dy));
         }
@@ -140,7 +136,7 @@ namespace Rocket
         public double GetDistanceFromPlanetSurface(Planet planet)
         {
             float dx = position.X - planet.position.X;
-            float dy = position.Y - planet.position.Y;
+            float dy = -position.Y - planet.position.Y;
 
             return (Math.Sqrt((dx * dx) + (dy * dy)) - planet.radian);
         }
@@ -154,10 +150,11 @@ namespace Rocket
             //F är i newtons, därför måste vi dela den på raketens massa för att få accelerationen
             double acceleration = (F / mass);
 
-            //detta ger oss en enhetsvector som "pekar" ner mot centret av universum(jorden)
-            Vector2 gravitationalPullDirection = Vector2.Normalize(-position);
+            //detta ger oss en enhetsvector som pekar mot planeten
+            Vector2 directionVector = Vector2.Normalize((new Vector2(planet.position.X, -planet.position.Y) - position));
 
-            return gravitationalPullDirection * (float)acceleration;
+            //förläng enhetsvektorn med gravitationskraften
+            return directionVector * (float)acceleration;
         }
 
 
@@ -191,10 +188,27 @@ namespace Rocket
 
         }
 
-        public float GetRocketAccelerationDirection()
+        public float GetVectorDirection(Vector2 vec)
         {
-            float rocketAccelerationDirection = (float)(Math.Atan2(-acceleration.Y, -acceleration.X) % MathHelper.TwoPi);
-            return (rocketAccelerationDirection - MathHelper.PiOver2);
+            float vectorDirection = (float)(Math.Atan2(-vec.Y, -vec.X) % MathHelper.TwoPi);
+            return (vectorDirection - MathHelper.PiOver2);
+        }
+
+        public Vector2 RotateVector(Vector2 v, float radians)
+        {
+            double cos = Math.Cos(radians);
+            double sin = Math.Sin(radians);
+
+            float rX = (float)((v.X * cos) - (v.Y * sin));
+            float rY = (float)((v.X * sin) + (v.Y * cos));
+
+            return new Vector2(rX, rY);
+        }
+
+        public void FireEngines()
+        {
+            float power = enginePower;
+            acceleration += RotateVector(new Vector2(0, -power), rotation);
         }
 
         public float GetRocketRotationRelativeToEarth()
@@ -210,8 +224,6 @@ namespace Rocket
             {
                 angle += 360;
             }
-
-            Console.WriteLine(angle);
             return angle;
         }
     }

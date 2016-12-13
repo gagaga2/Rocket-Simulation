@@ -78,12 +78,12 @@ namespace Rocket
             {
                 //kommer aldrig bli mindre än 0, vilket är bra
                 timeScale -= 1f;
-                timeScale = MathHelper.Clamp(timeScale, 1f, 10f);
+                timeScale = MathHelper.Clamp(timeScale, 1f, 30f);
             }
             if (state.IsKeyDown(Keys.S))
             {
                 timeScale += 1f;
-                timeScale = MathHelper.Clamp(timeScale, 1f, 10f);
+                timeScale = MathHelper.Clamp(timeScale, 1f, 30f);
             }
 
         }

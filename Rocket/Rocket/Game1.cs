@@ -57,7 +57,10 @@ namespace Rocket
                 p.Value.Load(GraphicsDevice, 1024);
             }
 
-            gui.Load(Content.Load<SpriteFont>("basicFont"), universe, Content.Load<Texture2D>("compass"), Content.Load<Texture2D>("arrow"));
+            gui.Load(Content.Load<SpriteFont>("basicFont"),
+                    universe, Content.Load<Texture2D>("compass"),
+                    Content.Load<Texture2D>("arrow"),
+                    Content.Load<Texture2D>("altimeter"));
         }
 
         /// <summary>

@@ -12,21 +12,23 @@ namespace Rocket
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        static void Main(string[] argss)
         {
-        #if DEBUG
-            args = new string[6];
-            args[0] = "270";
-            args[1] = "5";
-            args[2] = "10000";
-            args[3] = "10000";
-            args[4] = "8";
-            args[5] = "1507,9644737231";
-        #endif
-
+            // 143 0 1 1 0 0
+            string[] args = new string[6];
+            args[0] = "90";
+            args[1] = "0";
+            args[2] = "1000";
+            args[3] = "1150";
+            args[4] = "0";
+            args[5] = "0";
+           
             using (var game = new Game1(args))
                 game.Run();
         }
+
+        
+
     }
 #endif
 }
