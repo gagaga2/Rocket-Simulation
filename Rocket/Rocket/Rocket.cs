@@ -15,7 +15,8 @@ namespace Rocket
     {
         private Texture2D texture;
 
-        public Vector2 acceleration = new Vector2(0, 0);        //this vector holds all forces that should be applied
+        private Vector2 acceleration = new Vector2(0, 0);        //this vector holds all forces that should be applied
+        public Vector2 velocity = new Vector2(0, 0);
         public Vector2 position = new Vector2(0, 0);            //this holds the rockets position
         public Vector2 center = new Vector2(0, 0);              //center of rocket
 
@@ -59,33 +60,35 @@ namespace Rocket
             Planet moon = universe.GetPlanet("moon");
             altitude = GetDistanceFromPlanetSurface(earth);
 
+            acceleration = Vector2.Zero;
+
             if (enginePower != 0)
             {
                 leftPlatform = true;
             }
 
-            //om vi är "ovanför jordens yta", applicera gravitationskraften 
-            if (GetDistanceFromPlanetSurface(earth) > 0 && leftPlatform)
+            if (leftPlatform)
             {
-                acceleration += GetPlanetGravitationalPull(earth);
-            }
-            else if(GetDistanceFromPlanetSurface(earth) < 0)
-            {
-                //annars, om vi är "under", ta bort alla acceleration så vi inte sjunker igenom.
-                acceleration = Vector2.Zero;
-            }
 
-            //checka om vi kolliderar med månen och sluta accelerera då
-            if (GetDistanceFromPlanetSurface(moon) > 0)
-            {
-                acceleration += GetPlanetGravitationalPull(moon);
-            }
-            else if (GetDistanceFromPlanetSurface(moon) < 0)
-            {
-                acceleration = Vector2.Zero;
-            }
+                if (GetDistanceFromPlanetSurface(earth) < -2 || GetDistanceFromPlanetSurface(moon) < -2)
+                {
+                    acceleration = Vector2.Zero;
+                    velocity = Vector2.Zero;
+                }
+                else if (GetDistanceFromPlanetSurface(earth) > 0 && GetDistanceFromPlanetSurface(moon) > 0)
+                {
+                    acceleration += ((GetDragAccelerationVector(earth) * timeStep) +
+                       (GetPlanetGravitationalPullAcceleration(earth) * timeStep) +
+                       (GetPlanetGravitationalPullAcceleration(moon) * timeStep));
+                }
 
-           
+                acceleration += (GetEngineAcceleration() * timeStep);
+
+            }
+            velocity += acceleration;
+            position += velocity;
+
+
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Left))
             {
@@ -106,16 +109,12 @@ namespace Rocket
                 enginePower = MathHelper.Clamp(enginePower, 0, engineMaxPower);
             }
 
+            //allt det här är trasigt
+            //http://stackoverflow.com/questions/667034/simple-physics-based-movement
+            //http://stackoverflow.com/questions/8041431/how-to-make-fluid-drag-equation-not-framerate-dependent
+            //http://gamedev.stackexchange.com/questions/11119/adding-air-drag-to-a-golf-ball-trajectory-equation
+            //http://gamedev.stackexchange.com/questions/102106/how-do-i-integrate-drag-over-distance
 
-            //plocka isär floaten till komposanter...?
-            //Do
-
-            acceleration -= GetDragAccelerationVector(earth);
-
-            FireEngines();
-            //Console.WriteLine(acceleration);
-            //Apply all forces every step to change position
-            position += (acceleration * timeStep);
         }
 
         public void Draw(SpriteBatch spritebatch, GraphicsDevice graphics, float zoom)
@@ -149,45 +148,45 @@ namespace Rocket
         }
 
 
-        public Vector2 GetPlanetGravitationalPull(Planet planet)
+        public Vector2 GetPlanetGravitationalPullAcceleration(Planet planet)
         {
             double G = 6.674E-11;
             double r2 = Math.Pow(GetDistanceFromPlanetCore(planet), 2);
             float F = (float)(G * ((mass * planet.mass) / r2));
             //F är i newtons, därför måste vi dela den på raketens massa för att få accelerationen
-            double acceleration = (F / mass);
+            double gravitationalAcceleration = (F / mass);
 
             //detta ger oss en enhetsvector som pekar mot planeten
             Vector2 directionVector = Vector2.Normalize((new Vector2(planet.position.X, -planet.position.Y) - position));
 
             //förläng enhetsvektorn med gravitationskraften
-            return directionVector * (float)acceleration;
+            return directionVector * (float)gravitationalAcceleration;
         }
 
 
         public Vector2 GetDragAccelerationVector(Planet planet)
         {
+            
             double a = area;
             double p = planet.GetAirDensity(altitude);
-            float v = acceleration.Length();
+            float v = velocity.Length();
             float c = dragCoefficient;
-            float drag = (float)(c * a * p * Math.Pow(Math.Abs(v), 2) * 0.5);
+            float drag = (float)(c * a * p * 0.5 * Math.Pow(v, 2)); 
+            //v borde vara upphöjt i två
             //eftersom luftmotståndsekvationen ger oss newtons
             //måste vi dela med massan för att få accelerationen som verkar.
-            double dragAcceleration = drag / mass;
+            float dragAcceleration = drag / (float) mass;
 
-            if (acceleration.Length() != 0)
+            if (velocity.Length() != 0)
             {
-                //skapa ny vector med accelerationsriktningen
-                Vector2 dragVector = acceleration;
+                //skapa en enhetsvector i riktningen vi rör oss i
+                Vector2 dragVector = velocity;
                 dragVector.Normalize();
                 
                 
-
                 //förläng med vårt luftmotstånd
-                dragVector *= (float)(dragAcceleration);
-                return dragVector;
-
+                dragVector *= (dragAcceleration);
+                return -dragVector;
                 //rimligt? http://io9.gizmodo.com/5893615/absolutely-mindblowing-video-shot-from-the-space-shuttle-during-launch
             }
             else
@@ -214,19 +213,19 @@ namespace Rocket
             return new Vector2(rX, rY);
         }
 
-        public void FireEngines()
+        public Vector2 GetEngineAcceleration()
         {
             if ((fuel - (enginePower / engineEfficiency)) > 0)
             {
                 mass -= (engineMaxPower * enginePower / engineEfficiency);
                 fuel -= (engineMaxPower * enginePower / engineEfficiency);
-                float engineAcceleration = engineMaxPower * enginePower * 1000 / (float)mass;
-                Console.WriteLine(engineAcceleration);
-                acceleration += RotateVector(new Vector2(0, -engineAcceleration), rotation);
+                float engineAcceleration = engineMaxPower * enginePower * 1000 / (float) mass;
+                return RotateVector(new Vector2(0, -engineAcceleration), rotation);
             }
             else
             {
                 Console.WriteLine("out of fuel!");
+                return Vector2.Zero;
             }
         }
 

@@ -47,18 +47,18 @@ namespace Rocket
             spritebatch.Begin();
 
             //rita pil som pekar mot jordens gravitationskraft
-            spritebatch.Draw(arrow, viewCenter, null, Color.Green, rocket.GetVectorDirection(rocket.GetPlanetGravitationalPull(universe.GetPlanet("earth"))), (new Vector2(arrow.Width / 2, arrow.Height + 30)), 1f, SpriteEffects.None, 1);
+            spritebatch.Draw(arrow, viewCenter, null, Color.Green, rocket.GetVectorDirection(rocket.GetPlanetGravitationalPullAcceleration(universe.GetPlanet("earth"))), (new Vector2(arrow.Width / 2, arrow.Height + 30)), 1f, SpriteEffects.None, 1);
 
             //rita pil som pekar mot månens gravitationskraft
-            spritebatch.Draw(arrow, viewCenter, null, Color.Gray, rocket.GetVectorDirection(rocket.GetPlanetGravitationalPull(universe.GetPlanet("moon"))), (new Vector2(arrow.Width / 2, arrow.Height + 30)), 1f, SpriteEffects.None, 1);
+            spritebatch.Draw(arrow, viewCenter, null, Color.Gray, rocket.GetVectorDirection(rocket.GetPlanetGravitationalPullAcceleration(universe.GetPlanet("moon"))), (new Vector2(arrow.Width / 2, arrow.Height + 30)), 1f, SpriteEffects.None, 1);
 
             //rita compass
             spritebatch.Draw(compass, viewCenter, null, Color.Gray, rocket.rotation, (new Vector2(compass.Width / 2, compass.Height / 2)), 1f, SpriteEffects.None, 1);
 
             //rita pil som pekar mot accelerationen
-            if (rocket.acceleration != Vector2.Zero)
+            if (rocket.velocity != Vector2.Zero)
             {
-                spritebatch.Draw(arrow, viewCenter, null, Color.Red, rocket.GetVectorDirection(rocket.acceleration), (new Vector2(arrow.Width / 2, arrow.Height + 30)), 1f, SpriteEffects.None, 1);
+                spritebatch.Draw(arrow, viewCenter, null, Color.Red, rocket.GetVectorDirection(rocket.velocity), (new Vector2(arrow.Width / 2, arrow.Height + 30)), 1f, SpriteEffects.None, 1);
             }
 
             //rita altimeter
@@ -69,9 +69,9 @@ namespace Rocket
             Vector2 menuLocation = new Vector2(graphics.Viewport.Width - 150, graphics.Viewport.Height - 195);
             spritebatch.Draw(menu, menuLocation, Color.White);
             spritebatch.DrawString(font, rocket.GetDragAccelerationVector(earth).Length().ToString() + " m/s2", new Vector2(menuLocation.X + 10, menuLocation.Y + 25), Color.White);
-            spritebatch.DrawString(font, rocket.acceleration.Length().ToString() + " m/s" , new Vector2(menuLocation.X + 10, menuLocation.Y + 70), Color.White);
-            spritebatch.DrawString(font, rocket.GetPlanetGravitationalPull(moon).Length().ToString() + " m/s2", new Vector2(menuLocation.X + 10, menuLocation.Y + 115), Color.White);
-            spritebatch.DrawString(font, rocket.GetPlanetGravitationalPull(earth).Length().ToString() + " m/s2" , new Vector2(menuLocation.X + 10, menuLocation.Y + 160), Color.White);
+            spritebatch.DrawString(font, rocket.velocity.Length().ToString() + " m/s" , new Vector2(menuLocation.X + 10, menuLocation.Y + 70), Color.White);
+            spritebatch.DrawString(font, rocket.GetPlanetGravitationalPullAcceleration(moon).Length().ToString() + " m/s2", new Vector2(menuLocation.X + 10, menuLocation.Y + 115), Color.White);
+            spritebatch.DrawString(font, rocket.GetPlanetGravitationalPullAcceleration(earth).Length().ToString() + " m/s2" , new Vector2(menuLocation.X + 10, menuLocation.Y + 160), Color.White);
 
             //rita motormeny
             Vector2 fuelLocation = new Vector2(0, graphics.Viewport.Height - 100);
