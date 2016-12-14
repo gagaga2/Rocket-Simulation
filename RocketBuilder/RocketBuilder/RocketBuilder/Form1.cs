@@ -14,9 +14,9 @@ namespace RocketBuilder
     public partial class Form1 : Form
     {
         int RocketPosition = 0;
-        double altitude = 0;
-        double mass = 1;
-        double fuel = 1;
+        double altitude;
+        double mass;
+        double fuel;
         double rocketBaseWidth;
         double rocketHeight;
         double rocketEfficency;
@@ -72,26 +72,6 @@ namespace RocketBuilder
             UpdatePreview(decimal.ToInt32(tbxPosition.Value));
         }
 
-        private void tbxAltitude_ValueChanged(object sender, EventArgs e)
-        {
-            altitude = decimal.ToDouble(tbxAltitude.Value);
-        }
-
-        private void tbxHeight_ValueChanged(object sender, EventArgs e)
-        {
-            rocketHeight = decimal.ToDouble(tbxHeight.Value);
-        }
-
-        private void tbxWidth_ValueChanged(object sender, EventArgs e)
-        {
-            rocketBaseWidth = decimal.ToDouble(tbxWidth.Value);
-        }
-
-        private void tbxEfficiency_ValueChanged(object sender, EventArgs e)
-        {
-            rocketEfficency = decimal.ToDouble(tbxEfficiency.Value);
-            //https://en.wikipedia.org/wiki/Specific_impulse ??
-        }
 
         private void tbxFuel_ValueChanged(object sender, EventArgs e)
         {
@@ -100,14 +80,24 @@ namespace RocketBuilder
             lblTotalMass.Text = mass.ToString();
         }
 
+
         private void btnLaunch_Click(object sender, EventArgs e)
         {
 
             //Arean av basen av konen.
+
             double referenceArea = Math.PI * Math.Pow((rocketBaseWidth / 2), 2);
 
-            //dubbelsäkra
-            mass = Math.Round(fuel * 1.15);
+            //Hämta värdena från formuläret
+            
+            altitude = decimal.ToDouble(tbxAltitude.Value);
+            rocketHeight = decimal.ToDouble(tbxHeight.Value);
+            rocketBaseWidth = decimal.ToDouble(tbxWidth.Value);
+            rocketEfficency = decimal.ToDouble(tbxEfficiency.Value);
+            fuel = decimal.ToDouble(tbxFuel.Value);
+            mass = Math.Round(fuel * 1.15f);
+            rocketMaxPower = (float)decimal.ToDouble(tbxEngineMaxPower.Value);
+
 
             //gör en parameter-string med alla värden som ska skickas med till Rocket.exe
             string args = " " + RocketPosition.ToString() +
@@ -139,11 +129,6 @@ namespace RocketBuilder
                 //starta rocket.exe med parametrarna
                 var proc = System.Diagnostics.Process.Start(rocketexePath, args);
             }
-        }
-
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
